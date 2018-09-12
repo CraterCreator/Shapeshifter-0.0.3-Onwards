@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Collision : MonoBehaviour
 {
+    public bool gameOver;
 
     // Use this for initialization
     void Start()
@@ -21,8 +22,9 @@ public class Collision : MonoBehaviour
     {
         if (col.tag == "Player")
         {
-            print("works");
-            Time.timeScale = 0;
+            gameOver = true;
+            Time.timeScale = 0.1f;
+            Destroy(col.gameObject);
         }
     }
 }

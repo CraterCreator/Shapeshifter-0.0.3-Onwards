@@ -5,6 +5,7 @@ using UnityEngine;
 public class UI : MonoBehaviour
 {
     public float monitor;
+    public float score;
     // Use this for initialization
     void Start()
     {

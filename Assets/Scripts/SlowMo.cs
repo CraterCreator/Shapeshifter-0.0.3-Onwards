@@ -5,12 +5,10 @@ using UnityEngine;
 public class SlowMo : MonoBehaviour
 {
     public static bool slowOn;
-
-    private Collision col;
     // Use this for initialization
     void Start()
     {
-        col = GameObject.Find("Triangle").GetComponent<Collision>();
+
     }
 
     // Update is called once per frame
@@ -35,10 +33,7 @@ public class SlowMo : MonoBehaviour
             float currentSpeed = Time.timeScale;
             Time.timeScale = 0.5f;
             yield return new WaitForSeconds(.2f);
-            if (col.gameOver == false)
-            {
-                Time.timeScale = currentSpeed;
-            }
+            Time.timeScale = currentSpeed;
             slowOn = false;
         }
     }

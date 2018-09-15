@@ -23,7 +23,6 @@ public class Collision : MonoBehaviour
         if (col.tag == "Player")
         {
             gameOver = true;
-            Time.timeScale = 0.1f;
             Destroy(col.gameObject);
         }
     }

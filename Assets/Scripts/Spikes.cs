@@ -43,7 +43,7 @@ public class Spikes : MonoBehaviour
         if (hit.transform.tag == "Player" || hit2.transform.tag == "Player" || hit3.transform.tag == "Player")
         {
             Destroy(raycastOrigin);
-            ui.score += 10;
+            ui.score += 1;
         }
     }
 }

@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         anim = GetComponent<Animator>();
+        //Time.timeScale = 0.1f;
     }
 
     // Update is called once per frame

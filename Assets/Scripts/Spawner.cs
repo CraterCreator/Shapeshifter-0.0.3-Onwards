@@ -15,7 +15,7 @@ public class Spawner : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        spawnTime = 2;
+        spawnTime = 1;
         StartCoroutine(Spawn());
     }
 

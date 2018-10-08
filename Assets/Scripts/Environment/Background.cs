@@ -18,6 +18,6 @@ public class Background : MonoBehaviour
     void Update()
     {
         float offset = Time.time * scrollSpeed;
-        rend.material.SetTextureOffset("_MainTex", new Vector2(offset, 0));
+        rend.material.SetTextureOffset("_MainTex", new Vector2(0, -offset));
     }
 }

@@ -10,7 +10,7 @@ public class Spikes : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        ui = GameObject.Find("Game Manager").GetComponent<UI>();
+        ui = GameObject.Find("UI Controller").GetComponent<UI>();
         raycastOrigin = this.transform.Find("Origin").gameObject;
 
         moveSpeed = 0.0825f;
@@ -30,20 +30,23 @@ public class Spikes : MonoBehaviour
 
     void Raycast()
     {
-
-        RaycastHit2D hit = Physics2D.Raycast(new Vector2(raycastOrigin.transform.position.x + 5, raycastOrigin.transform.position.y), Vector2.left * 4);
-        RaycastHit2D hit2 = Physics2D.Raycast(new Vector2(raycastOrigin.transform.position.x - 5, raycastOrigin.transform.position.y), Vector2.right * 4);
-        RaycastHit2D hit3 = Physics2D.Raycast(new Vector2(raycastOrigin.transform.position.x, raycastOrigin.transform.position.y), Vector2.right * 2);
-
-        Debug.DrawRay(new Vector2(raycastOrigin.transform.position.x + 5, raycastOrigin.transform.position.y), Vector2.left * 4, Color.green);
-        Debug.DrawRay(new Vector2(raycastOrigin.transform.position.x - 5, raycastOrigin.transform.position.y), Vector2.right * 4, Color.green);
-        Debug.DrawRay(new Vector2(raycastOrigin.transform.position.x - 1, raycastOrigin.transform.position.y), Vector2.right * 2, Color.green);
-
-
-        if (hit.transform.tag == "Player" || hit2.transform.tag == "Player" || hit3.transform.tag == "Player")
+        if (gameObject != null)
         {
-            Destroy(raycastOrigin);
-            ui.score += 1;
+            RaycastHit2D hit = Physics2D.Raycast(new Vector2(raycastOrigin.transform.position.x + 5, raycastOrigin.transform.position.y), Vector2.left * 4);
+            RaycastHit2D hit2 = Physics2D.Raycast(new Vector2(raycastOrigin.transform.position.x - 5, raycastOrigin.transform.position.y), Vector2.right * 4);
+            RaycastHit2D hit3 = Physics2D.Raycast(new Vector2(raycastOrigin.transform.position.x, raycastOrigin.transform.position.y), Vector2.right * 2);
+
+            Debug.DrawRay(new Vector2(raycastOrigin.transform.position.x + 5, raycastOrigin.transform.position.y), Vector2.left * 4, Color.green);
+            Debug.DrawRay(new Vector2(raycastOrigin.transform.position.x - 5, raycastOrigin.transform.position.y), Vector2.right * 4, Color.green);
+            Debug.DrawRay(new Vector2(raycastOrigin.transform.position.x - 1, raycastOrigin.transform.position.y), Vector2.right * 2, Color.green);
+
+
+            if (hit.transform.tag == "Player" || hit2.transform.tag == "Player" || hit3.transform.tag == "Player")
+            {
+                Destroy(raycastOrigin);
+                ui.score += 1;
+            }
         }
+
     }
 }

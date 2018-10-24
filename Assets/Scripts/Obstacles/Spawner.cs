@@ -6,7 +6,9 @@ public class Spawner : MonoBehaviour
 {
     public Transform spawnPos;
     public GameObject[] Spikes;
+    public GameObject menu;
 
+    private bool off;
     private GameObject spike;
     private int index;
 
@@ -15,13 +17,18 @@ public class Spawner : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        spawnTime = 1;
-        StartCoroutine(Spawn());
+        off = true;
+        spawnTime = 1.5f;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (menu.activeSelf == false && off == true)
+        {
+            StartCoroutine(Spawn());
+            off = false;
+        }
     }
 
     IEnumerator Spawn()

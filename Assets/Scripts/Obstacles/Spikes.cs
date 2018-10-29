@@ -6,12 +6,13 @@ public class Spikes : MonoBehaviour
 {
     public UI ui;
     public float moveSpeed;
-    public GameObject raycastOrigin;
+    public GameObject raycastOrigin, manager;
     // Use this for initialization
     void Start()
     {
         ui = GameObject.Find("UI Controller").GetComponent<UI>();
         raycastOrigin = this.transform.Find("Origin").gameObject;
+        manager = GameObject.Find("Game Manager");
 
         moveSpeed = 0.0825f;
         Destroy(gameObject, 3);
@@ -20,6 +21,11 @@ public class Spikes : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(manager.activeSelf == false)
+        {
+            Destroy(gameObject);
+        }
+
         if (raycastOrigin != null)
         {
             Raycast();

@@ -5,80 +5,20 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     private Animator anim;
+    private UI ui;
     public bool RPrep, SPrep, LPrep;
 
     // Use this for initialization
     void Start()
     {
+        ui = GameObject.Find("UI Controller").GetComponent<UI>();
         anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
-
-        // Outer Animations
-        /*
-        if(Input.anyKey == false)
-        {
-            anim.SetBool("Middle", false);
-            anim.SetBool("Left", false);
-            anim.SetBool("Right", false);
-            anim.SetBool("R2M", false);
-            anim.SetBool("L2M", false);
-        }
-
-        if (Input.GetKey(KeyCode.LeftArrow) && Input.GetKey(KeyCode.RightArrow))
-        {
-            anim.SetBool("Middle", true);
-        }
-        else
-        {
-            anim.SetBool("Middle", false);
-        }
-
-        if (Input.GetKey(KeyCode.LeftArrow))
-        {
-            anim.SetBool("Left", true);
-
-            if(Input.GetKey(KeyCode.RightArrow))
-            {
-                anim.SetBool("L2M", true);
-            }
-            else
-            {
-                anim.SetBool("L2M", false);
-            }
-        }
-        else
-        {
-            anim.SetBool("Left", false);
-        }
-        
-        if (Input.GetKey(KeyCode.RightArrow))
-        {
-            anim.SetBool("Right", true);
-
-            if (Input.GetKey(KeyCode.LeftArrow))
-            {
-                anim.SetBool("R2M", true);
-            }
-            else
-            {
-                anim.SetBool("R2M", false);
-            }
-        }
-        else
-        {
-            anim.SetBool("Right", false);
-        }
-        
-    */
-
-        //Inner Animations
-
-        // Default
-        if(Input.anyKey == false)
+        if (Input.anyKey == false)
         {
             anim.SetBool("Sides", false);
             anim.SetBool("Right", false);
@@ -91,95 +31,101 @@ public class Player : MonoBehaviour
             SPrep = false;
             LPrep = false;
         }
+        if (ui.mainMenu.activeSelf == false && ui.gameOver.activeSelf == false)
+        {
+            //Inner Animations
 
-        // Sides
-        if (Input.GetKey(KeyCode.LeftArrow) && Input.GetKey(KeyCode.RightArrow) && RPrep == false)
-        {
-            anim.SetBool("Sides", true);
-            anim.SetBool("Right", false);
-            anim.SetBool("Left", false);
-            anim.SetBool("RTS", false);
-            SPrep = true;
-        }
-        else
-        {
-            anim.SetBool("Sides", false);
-        }
+            // Default
 
-        // Right
-        if (Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftArrow))
-        {
-            anim.SetBool("Right", true);
-            RPrep = true;
-            LPrep = false;
-        }
-        else
-        {
-            anim.SetBool("Right", false);
-        }
+            // Sides
+            if (Input.GetKey(KeyCode.LeftArrow) && Input.GetKey(KeyCode.RightArrow) && RPrep == false)
+            {
+                anim.SetBool("Sides", true);
+                anim.SetBool("Right", false);
+                anim.SetBool("Left", false);
+                anim.SetBool("RTS", false);
+                SPrep = true;
+            }
+            else
+            {
+                anim.SetBool("Sides", false);
+            }
 
-        // Right to Sides
-        if (RPrep == true && Input.GetKey(KeyCode.LeftArrow) && Input.GetKey(KeyCode.RightArrow))
-        {
-            SPrep = true;
-            anim.SetBool("RTS", true);
-            anim.SetBool("Right", false);
-            anim.SetBool("Sides", false);
-        }
-        else
-        {
-            anim.SetBool("RTS", false);
-        }
+            // Right
+            if (Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftArrow))
+            {
+                anim.SetBool("Right", true);
+                RPrep = true;
+                LPrep = false;
+            }
+            else
+            {
+                anim.SetBool("Right", false);
+            }
 
-        // SidesToRight
-        if(SPrep == true && Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftArrow))
-        {
-            anim.SetBool("Right", true);
-            anim.SetBool("STR", true);
-            anim.SetBool("RTS", false);
-        }
+            // Right to Sides
+            if (RPrep == true && Input.GetKey(KeyCode.LeftArrow) && Input.GetKey(KeyCode.RightArrow))
+            {
+                SPrep = true;
+                anim.SetBool("RTS", true);
+                anim.SetBool("Right", false);
+                anim.SetBool("Sides", false);
+            }
+            else
+            {
+                anim.SetBool("RTS", false);
+            }
 
-        else
-        {
-            anim.SetBool("STR", false);
-        }
+            // SidesToRight
+            if (SPrep == true && Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftArrow))
+            {
+                anim.SetBool("Right", true);
+                anim.SetBool("STR", true);
+                anim.SetBool("RTS", false);
+            }
 
-        // Left
-        if (Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.RightArrow))
-        {
-            anim.SetBool("Left", true);
-            LPrep = true;
-            RPrep = false;
-        }
-        else
-        {
-            anim.SetBool("Left", false);
-        }
+            else
+            {
+                anim.SetBool("STR", false);
+            }
 
-        // Left to Sides
-        if (LPrep == true && Input.GetKey(KeyCode.RightArrow) && Input.GetKey(KeyCode.LeftArrow))
-        {
-            SPrep = true;
-            anim.SetBool("LTS", true);
-            anim.SetBool("Left", false);
-            anim.SetBool("Sides", false);
-        }
-        else
-        {
-            anim.SetBool("LTS", false);
-        }
+            // Left
+            if (Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.RightArrow))
+            {
+                anim.SetBool("Left", true);
+                LPrep = true;
+                RPrep = false;
+            }
+            else
+            {
+                anim.SetBool("Left", false);
+            }
 
-        // Sides To Left
-        if (SPrep == true && Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.RightArrow))
-        {
-            anim.SetBool("Left", true);
-            anim.SetBool("STL", true);
-            anim.SetBool("RTS", false);
-        }
+            // Left to Sides
+            if (LPrep == true && Input.GetKey(KeyCode.RightArrow) && Input.GetKey(KeyCode.LeftArrow))
+            {
+                SPrep = true;
+                anim.SetBool("LTS", true);
+                anim.SetBool("Left", false);
+                anim.SetBool("Sides", false);
+            }
+            else
+            {
+                anim.SetBool("LTS", false);
+            }
 
-        else
-        {
-            anim.SetBool("STL", false);
+            // Sides To Left
+            if (SPrep == true && Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.RightArrow))
+            {
+                anim.SetBool("Left", true);
+                anim.SetBool("STL", true);
+                anim.SetBool("RTS", false);
+            }
+
+            else
+            {
+                anim.SetBool("STL", false);
+            }
         }
     }
 }

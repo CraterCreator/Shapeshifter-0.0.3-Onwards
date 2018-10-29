@@ -24,7 +24,10 @@ public class Spawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (menu.activeSelf == false && off == true)
+        if(gameObject.activeSelf == true)
+        { 
+}
+        if (off == true)
         {
             StartCoroutine(Spawn());
             off = false;
@@ -40,5 +43,10 @@ public class Spawner : MonoBehaviour
             Instantiate(spike, spawnPos.position, spawnPos.rotation);
             yield return new WaitForSeconds(spawnTime);
         }
+    }
+
+    void OnEnable()
+    {
+        off = true;
     }
 }

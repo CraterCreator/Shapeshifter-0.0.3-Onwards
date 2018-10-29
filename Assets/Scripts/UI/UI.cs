@@ -6,9 +6,10 @@ using UnityEngine.UI;
 public class UI : MonoBehaviour
 {
     private Animator anim;
-    private Spawner spawn;
 
-    public GameObject OptionsMenu, MainMenu;
+    public Animator anim2;
+    public GameObject left, right;
+    public GameObject optionsMenu, mainMenu, gameOver, manager;
     public float monitor;
     public int score, highScore;
     public Text scoreUI, highUI, menuScore;
@@ -16,19 +17,18 @@ public class UI : MonoBehaviour
     void Awake()
     {
         anim = GameObject.FindGameObjectWithTag("MainMenu").GetComponent<Animator>();
-        spawn = GameObject.Find("Game Manager").GetComponent<Spawner>();
-
         highScore = PlayerPrefs.GetInt("Highscore");
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(score >= highScore)
+        if (score >= highScore)
         {
             highScore = score;
             PlayerPrefs.SetInt("Highscore", highScore);
         }
+        menuScore.text = "" + score;
         monitor = Time.timeScale;
         scoreUI.text = "" + score;
         highUI.text = "" + highScore;
@@ -37,24 +37,24 @@ public class UI : MonoBehaviour
         {
             case 10:
                 Time.timeScale = 1.2f;
-                spawn.spawnTime = 1.4f;
                 break;
             case 20:
                 Time.timeScale = 1.3f;
-                spawn.spawnTime = 1.3f;
                 break;
             case 30:
                 Time.timeScale = 1.5f;
-                spawn.spawnTime = 1.2f;
                 break;
             case 40:
                 Time.timeScale = 1.6f;
-                spawn.spawnTime = 1.1f;
                 break;
             case 50:
                 Time.timeScale = 1.8f;
-                spawn.spawnTime = 1;
                 break;
+        }
+
+        if (left.activeSelf == false || right.activeSelf == false)
+        {
+            GameOver();
         }
     }
 
@@ -64,16 +64,34 @@ public class UI : MonoBehaviour
         StartCoroutine(Off());
     }
 
+    public void TryAgain()
+    {
+        anim2.SetBool("Try", true);
+        StartCoroutine(Off());
+        score = 0;   
+    }
+
     IEnumerator Off()
     {
         yield return new WaitForSeconds(0.4f);
-        MainMenu.SetActive(false);
-
+        mainMenu.SetActive(false);
+        gameOver.SetActive(false);
+        manager.SetActive(true);
     }
 
     public void Options()
     {
-        MainMenu.SetActive(false);
-        OptionsMenu.SetActive(true);
+        mainMenu.SetActive(false);
+        optionsMenu.SetActive(true);
+    }
+
+    void GameOver()
+    {
+        GameObject manager = GameObject.Find("Game Manager");
+        Time.timeScale = 1;
+        gameOver.SetActive(true);
+        manager.SetActive(false);
+        left.SetActive(true);
+        right.SetActive(true);
     }
 }

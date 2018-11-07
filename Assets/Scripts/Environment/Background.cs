@@ -12,7 +12,7 @@ public class Background : MonoBehaviour
     void Start()
     {
         rend = GetComponent<Renderer>();
-        scrollSpeed = 1;
+        scrollSpeed = 2.5f;
     }
 
     // Update is called once per frame

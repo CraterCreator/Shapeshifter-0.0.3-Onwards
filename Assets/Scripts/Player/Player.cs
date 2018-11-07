@@ -127,5 +127,19 @@ public class Player : MonoBehaviour
                 anim.SetBool("STL", false);
             }
         }
+
+        else
+        {
+            anim.SetBool("Sides", false);
+            anim.SetBool("Right", false);
+            anim.SetBool("Left", false);
+            anim.SetBool("RTS", false);
+            anim.SetBool("STR", false);
+            anim.SetBool("LTS", false);
+            anim.SetBool("STL", false);
+            RPrep = false;
+            SPrep = false;
+            LPrep = false;
+        }
     }
 }

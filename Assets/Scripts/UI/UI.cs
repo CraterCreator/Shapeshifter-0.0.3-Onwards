@@ -7,12 +7,12 @@ public class UI : MonoBehaviour
 {
     private Animator anim;
 
-    public Animator anim2;
+    public Animator animOver, animBack;
     public GameObject left, right;
     public GameObject optionsMenu, mainMenu, gameOver, manager;
     public float monitor;
     public int score, highScore;
-    public Text scoreUI, highUI, menuScore;
+    public Text scoreUI, highUI, highUI2, menuScore;
     // Use this for initialization
     void Awake()
     {
@@ -32,6 +32,7 @@ public class UI : MonoBehaviour
         monitor = Time.timeScale;
         scoreUI.text = "" + score;
         highUI.text = "" + highScore;
+        highUI2.text = "" + highScore;
 
         switch (score)
         {
@@ -61,14 +62,17 @@ public class UI : MonoBehaviour
     public void Play()
     {
         anim.SetBool("Play", true);
+        animBack.SetBool("Started", true);
         StartCoroutine(Off());
     }
 
     public void TryAgain()
     {
-        anim2.SetBool("Try", true);
+        left.SetActive(true);
+        right.SetActive(true);
+        animOver.SetBool("Try", true);
         StartCoroutine(Off());
-        score = 0;   
+        score = 0;
     }
 
     IEnumerator Off()
@@ -87,11 +91,15 @@ public class UI : MonoBehaviour
 
     void GameOver()
     {
+        left.SetActive(false);
+        right.SetActive(false);
         GameObject manager = GameObject.Find("Game Manager");
         Time.timeScale = 1;
         gameOver.SetActive(true);
-        manager.SetActive(false);
-        left.SetActive(true);
-        right.SetActive(true);
+        animBack.SetBool("Started", false);
+        if (manager != null)
+        {
+            manager.SetActive(false);
+        }
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class CheckPoint : MonoBehaviour
 {
     public float moveSpeed;
-    public GameObject manager;
+    private GameObject manager;
     // Use this for initialization
     void Start()
     {

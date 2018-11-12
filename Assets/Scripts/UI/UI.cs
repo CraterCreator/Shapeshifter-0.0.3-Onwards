@@ -7,6 +7,7 @@ public class UI : MonoBehaviour
 {
     private Animator anim;
 
+    public Spawner spawner;
     public Animator animOver, animBack;
     public GameObject left, right;
     public GameObject optionsMenu, mainMenu, gameOver, manager;
@@ -33,25 +34,6 @@ public class UI : MonoBehaviour
         scoreUI.text = "" + score;
         highUI.text = "" + highScore;
         highUI2.text = "" + highScore;
-
-        switch (score)
-        {
-            case 10:
-                Time.timeScale = 1.2f;
-                break;
-            case 20:
-                Time.timeScale = 1.3f;
-                break;
-            case 30:
-                Time.timeScale = 1.5f;
-                break;
-            case 40:
-                Time.timeScale = 1.6f;
-                break;
-            case 50:
-                Time.timeScale = 1.8f;
-                break;
-        }
 
         if (left.activeSelf == false || right.activeSelf == false)
         {
@@ -91,6 +73,7 @@ public class UI : MonoBehaviour
 
     void GameOver()
     {
+        spawner.counter = 0;
         left.SetActive(false);
         right.SetActive(false);
         GameObject manager = GameObject.Find("Game Manager");

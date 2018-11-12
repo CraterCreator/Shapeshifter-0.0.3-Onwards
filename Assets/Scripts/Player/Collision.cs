@@ -10,5 +10,10 @@ public class Collision : MonoBehaviour
         {
             gameObject.SetActive(false);
         }
+
+        if(col.tag == "Checkpoint")
+        {
+            Destroy(col.transform.parent.gameObject);
+        }
     }
 }

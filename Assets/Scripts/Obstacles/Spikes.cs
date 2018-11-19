@@ -15,7 +15,7 @@ public class Spikes : MonoBehaviour
         manager = GameObject.Find("Game Manager");
 
         moveSpeed = 0.0825f;
-        Destroy(gameObject, 3);
+        Destroy(gameObject, 10);
     }
 
     // Update is called once per frame

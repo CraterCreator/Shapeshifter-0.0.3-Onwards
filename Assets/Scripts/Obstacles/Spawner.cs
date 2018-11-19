@@ -6,14 +6,14 @@ public class Spawner : MonoBehaviour
 {
     public Transform spawnPos;
     public GameObject[] Spikes;
-    public GameObject menu, line;
+    public GameObject line;
     public GameObject ob1, ob2, ob3, ob4, ob5;
     public List<int> numbers = new List<int>(new int[] { 0, 1, 2, 3 });
     public float spawnTime;
     public int counter;
 
     private int index, zero, one, two, three;
-    private GameObject spike;
+    private GameObject spike, menu;
     private bool off, num0, num1, num2, num3;
 
 
@@ -38,7 +38,7 @@ public class Spawner : MonoBehaviour
     {
         for (int i = 0; i < i + 1; i++)
         {
-            counter++;
+            counter += 1;
             index = numbers[Random.Range(Mathf.Min(numbers.ToArray()), numbers.Count)];
             spike = Spikes[index];
             Instantiate(spike, spawnPos.position, spawnPos.rotation);
@@ -50,7 +50,7 @@ public class Spawner : MonoBehaviour
                     yield return new WaitForSeconds(spawnTime);
                     if(ob1 != null)
                     Instantiate(ob1, spawnPos.position, spawnPos.rotation);
-                    yield return new WaitForSeconds(4);
+                    yield return new WaitForSeconds(3);
                     break;
                 case 40:
                     Instantiate(line, new Vector3(spawnPos.position.x + 5, spawnPos.position.y, 1), Quaternion.Euler(0, -90, 0));
@@ -74,7 +74,7 @@ public class Spawner : MonoBehaviour
                     Instantiate(line, new Vector3(spawnPos.position.x + 5, spawnPos.position.y, 1), Quaternion.Euler(0, -90, 0));
                     yield return new WaitForSeconds(spawnTime);
                     Instantiate(ob5, spawnPos.position, spawnPos.rotation);
-                    yield return new WaitForSeconds(4);
+                    yield return new WaitForSeconds(8);
                     break;
             }
 

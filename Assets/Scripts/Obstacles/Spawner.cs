@@ -11,6 +11,7 @@ public class Spawner : MonoBehaviour
     public List<int> numbers = new List<int>(new int[] { 0, 1, 2, 3 });
     public float spawnTime;
     public int counter;
+    public int destroyTimer;
 
     private int index, zero, one, two, three;
     private GameObject spike, menu;
@@ -22,6 +23,7 @@ public class Spawner : MonoBehaviour
     {
         off = true;
         spawnTime = 1.5f;
+        destroyTimer = 3;
     }
 
     // Update is called once per frame
@@ -42,39 +44,43 @@ public class Spawner : MonoBehaviour
             index = numbers[Random.Range(Mathf.Min(numbers.ToArray()), numbers.Count)];
             spike = Spikes[index];
             Instantiate(spike, spawnPos.position, spawnPos.rotation);
-
+            
             switch (counter)
             {
                 case 20:
                     Instantiate(line, new Vector3(spawnPos.position.x + 5, spawnPos.position.y, 1), Quaternion.Euler(0, -90, 0));
                     yield return new WaitForSeconds(spawnTime);
-                    if(ob1 != null)
                     Instantiate(ob1, spawnPos.position, spawnPos.rotation);
+                    destroyTimer = 5;
                     yield return new WaitForSeconds(3);
                     break;
                 case 40:
                     Instantiate(line, new Vector3(spawnPos.position.x + 5, spawnPos.position.y, 1), Quaternion.Euler(0, -90, 0));
                     yield return new WaitForSeconds(spawnTime);
                     Instantiate(ob2, spawnPos.position, spawnPos.rotation);
+                    destroyTimer = 6;
                     yield return new WaitForSeconds(4);
                     break;
                 case 60:
                     Instantiate(line, new Vector3(spawnPos.position.x + 5, spawnPos.position.y, 1), Quaternion.Euler(0, -90, 0));
                     yield return new WaitForSeconds(spawnTime);
                     Instantiate(ob3, spawnPos.position, spawnPos.rotation);
+                    destroyTimer = 7;
                     yield return new WaitForSeconds(4);
                     break;
                 case 80:
                     Instantiate(line, new Vector3(spawnPos.position.x + 5, spawnPos.position.y, 1), Quaternion.Euler(0, -90, 0));
                     yield return new WaitForSeconds(spawnTime);
                     Instantiate(ob4, spawnPos.position, spawnPos.rotation);
-                    yield return new WaitForSeconds(4);
+                    destroyTimer = 8;
+                    yield return new WaitForSeconds(5);
                     break;
                 case 100:
                     Instantiate(line, new Vector3(spawnPos.position.x + 5, spawnPos.position.y, 1), Quaternion.Euler(0, -90, 0));
                     yield return new WaitForSeconds(spawnTime);
                     Instantiate(ob5, spawnPos.position, spawnPos.rotation);
-                    yield return new WaitForSeconds(8);
+                    destroyTimer = 9;
+                    yield return new WaitForSeconds(5);
                     break;
             }
 

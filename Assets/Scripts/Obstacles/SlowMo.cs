@@ -24,6 +24,7 @@ public class SlowMo : MonoBehaviour
             yield return new WaitForSeconds(.2f);
             Time.timeScale = currentSpeed;
             slowOn = false;
+            Destroy(gameObject);
         }
     }
 }

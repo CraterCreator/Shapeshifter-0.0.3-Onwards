@@ -17,11 +17,15 @@ public class CheckPoint : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(manager.activeSelf == false)
+        if (manager.activeSelf == false)
         {
             Destroy(gameObject);
         }
 
-        transform.Translate(0, -moveSpeed * Time.timeScale, 0);
+        if (gameObject.tag != "CheckpointFinish")
+        {
+            transform.Translate(0, -moveSpeed * Time.timeScale, 0);
+        }
+
     }
 }

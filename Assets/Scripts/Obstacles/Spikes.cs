@@ -4,18 +4,21 @@ using UnityEngine;
 
 public class Spikes : MonoBehaviour
 {
-    public UI ui;
     public float moveSpeed;
-    public GameObject raycastOrigin, manager;
+
+    private UI ui;
+    private GameObject raycastOrigin, manager;
+    private Spawner spawner;
     // Use this for initialization
     void Start()
     {
         ui = GameObject.Find("UI Controller").GetComponent<UI>();
-        raycastOrigin = this.transform.Find("Origin").gameObject;
+        raycastOrigin = transform.Find("Origin").gameObject;
         manager = GameObject.Find("Game Manager");
+        spawner = GameObject.Find("Game Manager").GetComponent<Spawner>();
 
+        Destroy(gameObject, spawner.destroyTimer);
         moveSpeed = 0.0825f;
-        Destroy(gameObject, 3);
     }
 
     // Update is called once per frame
@@ -23,10 +26,10 @@ public class Spikes : MonoBehaviour
     {
         if(manager.activeSelf == false)
         {
-            Destroy(gameObject);
+            Destroy(gameObject, 0.01f);
         }
 
-        if (raycastOrigin != null)
+        if (raycastOrigin != null && gameObject != null)
         {
             Raycast();
         }

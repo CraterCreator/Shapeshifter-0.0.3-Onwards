@@ -10,7 +10,7 @@ public class UI : MonoBehaviour
     public Spawner spawner;
     public Animator animOver, animBack;
     public GameObject left, right;
-    public GameObject optionsMenu, mainMenu, gameOver, manager, sfx, music;
+    public GameObject optionsMenu, mainMenu, gameOver, creditsMenu, manager, sfx, music;
     public float monitor;
     public int score, highScore;
     public Text scoreUI, highUI, highUI2, menuScore;
@@ -76,6 +76,20 @@ public class UI : MonoBehaviour
         {
             mainMenu.SetActive(true);
             optionsMenu.SetActive(false);
+        }
+    }
+
+    public void Credits()
+    {
+        if (creditsMenu.activeSelf == false)
+        {
+            mainMenu.SetActive(false);
+            creditsMenu.SetActive(true);
+        }
+        else
+        {
+            mainMenu.SetActive(true);
+            creditsMenu.SetActive(false);
         }
     }
 

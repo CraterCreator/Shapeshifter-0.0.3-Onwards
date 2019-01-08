@@ -29,6 +29,7 @@ public class Spawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if (off == true)
         {
             StartCoroutine(Spawn());
@@ -40,11 +41,15 @@ public class Spawner : MonoBehaviour
     {
         for (int i = 0; i < i + 1; i++)
         {
+            if (spawnTime > 0.9)
+            {
+                spawnTime -= 0.01f;
+            }
             counter += 1;
             index = numbers[Random.Range(Mathf.Min(numbers.ToArray()), numbers.Count)];
             spike = Spikes[index];
             Instantiate(spike, spawnPos.position, spawnPos.rotation);
-            
+
             switch (counter)
             {
                 case 20:
@@ -182,6 +187,7 @@ public class Spawner : MonoBehaviour
 
     void OnEnable()
     {
+        spawnTime = 1.5f;
         off = true;
     }
 }

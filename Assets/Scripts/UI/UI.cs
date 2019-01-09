@@ -53,6 +53,7 @@ public class UI : MonoBehaviour
         left.SetActive(true);
         right.SetActive(true);
         animOver.SetBool("Try", true);
+        animBack.SetBool("Started", true);
         StartCoroutine(Off());
         score = 0;
     }

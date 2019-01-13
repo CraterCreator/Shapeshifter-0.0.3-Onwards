@@ -44,6 +44,7 @@ public class Spawner : MonoBehaviour
             if (spawnTime > 0.9)
             {
                 spawnTime -= 0.01f;
+                Time.timeScale += 0.01f;
             }
             counter += 1;
             index = numbers[Random.Range(Mathf.Min(numbers.ToArray()), numbers.Count)];

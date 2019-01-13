@@ -10,11 +10,15 @@ public class ColourSwap : MonoBehaviour
     {
         rend = GetComponent<SpriteRenderer>();
         colorRend = GameObject.Find("Right Neon").GetComponent<SpriteRenderer>();
+        rend.color = Color.red;
     }
 
     // Update is called once per frame
     void Update()
     {
-        rend.color = colorRend.color;
+        if (rend.color != Color.green)
+        {
+            rend.color = colorRend.color;
+        }
     }
 }

@@ -10,7 +10,7 @@ public class Spikes : MonoBehaviour
     private GameObject raycastOrigin, manager;
     private SpriteRenderer triggerL, triggerR;
     private Spawner spawner;
-    private Animator anim;
+    public Animator anim;
     private int right, left;
     // Use this for initialization
     void Start()
@@ -62,6 +62,7 @@ public class Spikes : MonoBehaviour
 
             if (gameObject.name != "Middle Tri(Clone)" && hit.transform.tag == "Player" || gameObject.name != "Middle Tri(Clone)" && hit2.transform.tag == "Player" || gameObject.name != "Middle Tri(Clone)" && hit3.transform.tag == "Player")
             {
+                StartCoroutine(Flicker());
                 Destroy(raycastOrigin);
                 ui.score += 1;
             }
@@ -90,6 +91,7 @@ public class Spikes : MonoBehaviour
 
             if (right == 1 && left == 1)
             {
+                StartCoroutine(Flicker());
                 anim.SetBool("Win", true);
                 ui.score += 1;
                 left = 0;
@@ -98,5 +100,29 @@ public class Spikes : MonoBehaviour
             }
         }
 
+    }
+
+    IEnumerator Flicker()
+    {
+        for (int i = 0; i < 1; i++)
+        {
+            if (gameObject.name == "Outer Tri's(Clone)" || gameObject.name == "Middle Tri(Clone)")
+            {
+                SpriteRenderer rend = transform.Find("Effects").GetComponent<SpriteRenderer>();
+                SpriteRenderer rend2 = transform.Find("Effects 2").GetComponent<SpriteRenderer>();
+                rend.color = Color.green;
+                rend2.color = Color.green;
+                yield return new WaitForSeconds(1f);
+                rend.color = Color.red;
+                rend2.color = Color.red;
+            }
+            else
+            {
+                SpriteRenderer rend = transform.Find("Effects").GetComponent<SpriteRenderer>();
+                rend.color = Color.green;
+                yield return new WaitForSeconds(1);
+                rend.color = Color.red;
+            }
+        }
     }
 }

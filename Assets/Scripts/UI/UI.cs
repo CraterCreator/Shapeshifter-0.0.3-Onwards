@@ -84,12 +84,10 @@ public class UI : MonoBehaviour
     {
         if (creditsMenu.activeSelf == false)
         {
-            mainMenu.SetActive(false);
             creditsMenu.SetActive(true);
         }
         else
         {
-            mainMenu.SetActive(true);
             creditsMenu.SetActive(false);
         }
     }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ColourSwap : MonoBehaviour
 {
@@ -16,7 +17,7 @@ public class ColourSwap : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (rend.color != Color.green)
+        if (rend.color != Color.cyan && rend != null)
         {
             rend.color = colorRend.color;
         }

@@ -8,9 +8,8 @@ public class Spikes : MonoBehaviour
 
     private UI ui;
     private GameObject raycastOrigin, manager;
-    private SpriteRenderer triggerL, triggerR;
     private Spawner spawner;
-    public Animator anim;
+    private Animator anim;
     private int right, left;
     // Use this for initialization
     void Start()
@@ -23,8 +22,6 @@ public class Spikes : MonoBehaviour
         if (gameObject.name == "Middle Tri(Clone)")
         {
             anim = GetComponent<Animator>();
-            triggerL = transform.Find("Trigger Left").GetComponent<SpriteRenderer>();
-            triggerR = transform.Find("Trigger Right").GetComponent<SpriteRenderer>();
         }
 
         Destroy(gameObject, spawner.destroyTimer);
@@ -67,29 +64,35 @@ public class Spikes : MonoBehaviour
                 ui.score += 1;
             }
 
-            if (gameObject.name == "Middle Tri(Clone)" && hit.transform.tag == "Player")
+            if (gameObject.name == "Middle Tri(Clone)" && hit.transform.name == "Right")
             {
-                triggerR.color = Color.green;
-                right += 1;
+                right = 2;
             }
 
-            if (gameObject.name == "Middle Tri(Clone)" && hit2.transform.tag == "Player")
+            if (gameObject.name == "Middle Tri(Clone)" && hit.transform.name == "Left")
             {
-                triggerL.color = Color.green;
-                left += 1;
+                right = 1;
             }
 
-            if (right == 2 || left == 2)
+            if (gameObject.name == "Middle Tri(Clone)" && hit2.transform.name == "Right")
+            {
+                left = 1;
+            }
+
+            if (gameObject.name == "Middle Tri(Clone)" && hit2.transform.name == "Left")
+            {
+                left = 2;
+            }
+
+            if (left == 1 || right == 1)
             {
                 anim.SetBool("Lose", true);
-                triggerR.color = Color.red;
-                triggerL.color = Color.red;
                 left = 0;
                 right = 0;
                 Destroy(raycastOrigin);
             }
 
-            if (right == 1 && left == 1)
+            if (right == 2 && left == 2)
             {
                 StartCoroutine(Flicker());
                 anim.SetBool("Win", true);

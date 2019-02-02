@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class UI : MonoBehaviour
 {
     private Animator anim;
+    private Collision col;
 
     public Spawner spawner;
     public Animator animOver, animBack;
@@ -17,6 +18,7 @@ public class UI : MonoBehaviour
     // Use this for initialization
     void Awake()
     {
+        col = GameObject.Find("Triangle Right").GetComponent<Collision>();
         anim = GameObject.FindGameObjectWithTag("MainMenu").GetComponent<Animator>();
         highScore = PlayerPrefs.GetInt("Highscore");
     }
@@ -43,6 +45,7 @@ public class UI : MonoBehaviour
 
     public void Play()
     {
+        col.gameover = false;
         anim.SetBool("Play", true);
         animBack.SetBool("Started", true);
         StartCoroutine(Off());
@@ -50,6 +53,7 @@ public class UI : MonoBehaviour
 
     public void TryAgain()
     {
+        col.gameover = false;
         left.SetActive(true);
         right.SetActive(true);
         animOver.SetBool("Try", true);

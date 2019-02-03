@@ -17,9 +17,6 @@ public class ColourSwap : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (rend.color != Color.cyan && rend != null)
-        {
-            rend.color = colorRend.color;
-        }
+        rend.color = colorRend.color;
     }
 }

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class UI : MonoBehaviour
 {
     private Animator anim;
-    private Collision col;
+    private Collision colL, colR;
 
     public Spawner spawner;
     public Animator animOver, animBack;
@@ -18,7 +18,8 @@ public class UI : MonoBehaviour
     // Use this for initialization
     void Awake()
     {
-        col = GameObject.Find("Triangle Right").GetComponent<Collision>();
+        colL = GameObject.Find("Triangle Left").GetComponent<Collision>();
+        colR = GameObject.Find("Triangle Right").GetComponent<Collision>();
         anim = GameObject.FindGameObjectWithTag("MainMenu").GetComponent<Animator>();
         highScore = PlayerPrefs.GetInt("Highscore");
     }
@@ -45,15 +46,30 @@ public class UI : MonoBehaviour
 
     public void Play()
     {
-        col.gameover = false;
+        colL.gameover = false;
+        colR.gameover = false;
+        colL.edge.enabled = true;
+        colR.edge.enabled = true;
+        left.SetActive(true);
+        right.SetActive(true);
         anim.SetBool("Play", true);
         animBack.SetBool("Started", true);
         StartCoroutine(Off());
+        score = 0;
     }
 
     public void TryAgain()
     {
-        col.gameover = false;
+        GameObject child1 = right.transform.GetChild(0).gameObject;
+        GameObject child2 = left.transform.GetChild(0).gameObject;
+        child1.SetActive(true);
+        child2.SetActive(true);
+        colL.gameover = false;
+        colR.gameover = false;
+        colL.edge.enabled = true;
+        colR.edge.enabled = true;
+        colL.rend.enabled = true;
+        colR.rend.enabled = true;
         left.SetActive(true);
         right.SetActive(true);
         animOver.SetBool("Try", true);
@@ -64,7 +80,7 @@ public class UI : MonoBehaviour
 
     IEnumerator Off()
     {
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSeconds(0.1f);
         mainMenu.SetActive(false);
         gameOver.SetActive(false);
         manager.SetActive(true);

@@ -19,7 +19,12 @@ public class TrailSpawner1 : MonoBehaviour
 
     void Update()
     {
-        if (col.gameover == false)
+        if(col.gameover == true)
+        {
+            speed = 0.25f;
+        }
+
+        if (col.gameover == false && speed != 0.05f)
         {
             speed = 0.25f;
         }
@@ -29,7 +34,7 @@ public class TrailSpawner1 : MonoBehaviour
     {
         for (int i = 0; i < i + 1; i++)
         {
-            if (ui.mainMenu.activeSelf == false && ui.gameOver.activeSelf == false && col.gameover == false)
+            if (ui.mainMenu.activeSelf == false && ui.gameOver.activeSelf == false && col.gameover == false && ui.optionsMenu.activeSelf == false)
             {
                 Instantiate(trail, transform.position, transform.rotation);
             }

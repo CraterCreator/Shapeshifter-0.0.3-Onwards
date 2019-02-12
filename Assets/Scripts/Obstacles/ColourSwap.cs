@@ -5,13 +5,12 @@ using UnityEngine.UI;
 
 public class ColourSwap : MonoBehaviour
 {
-    private SpriteRenderer rend, colorRend;
+    public SpriteRenderer rend, colorRend;
     // Use this for initialization
     void Start()
     {
         rend = GetComponent<SpriteRenderer>();
         colorRend = GameObject.Find("Right Neon").GetComponent<SpriteRenderer>();
-        rend.color = Color.red;
     }
 
     // Update is called once per frame

@@ -42,6 +42,15 @@ public class UI : MonoBehaviour
         {
             GameOver();
         }
+
+        if(gameOver.activeSelf == true || mainMenu.activeSelf == true)
+        {
+            animBack.SetBool("Started", false);
+        }
+        else
+        {
+            animBack.SetBool("Started", true);
+        }
     }
 
     public void Play()
@@ -53,7 +62,6 @@ public class UI : MonoBehaviour
         left.SetActive(true);
         right.SetActive(true);
         anim.SetBool("Play", true);
-        animBack.SetBool("Started", true);
         StartCoroutine(Off());
         score = 0;
     }
@@ -73,7 +81,6 @@ public class UI : MonoBehaviour
         left.SetActive(true);
         right.SetActive(true);
         animOver.SetBool("Try", true);
-        animBack.SetBool("Started", true);
         StartCoroutine(Off());
         score = 0;
     }
@@ -143,8 +150,6 @@ public class UI : MonoBehaviour
         right.SetActive(false);
         GameObject manager = GameObject.Find("Game Manager");
         Time.timeScale = 1;
-        gameOver.SetActive(true);
-        animBack.SetBool("Started", false);
         if (manager != null)
         {
             manager.SetActive(false);

@@ -84,11 +84,10 @@ public class Collision : MonoBehaviour
             GameObject child = gameObject.transform.GetChild(0).gameObject;
             child.SetActive(false);
             edge.enabled = false;
-            SpriteRenderer rend = GetComponent<SpriteRenderer>();
+            ui.gameOver.SetActive(true);
             rend.enabled = false;
             particleL.SetActive(true);
             particleR.SetActive(true);
-            //Time.timeScale = Mathf.Lerp(1, 0, 100);
             yield return new WaitForSeconds(1.5f);
             gameObject.SetActive(false);
             particleL.SetActive(false);

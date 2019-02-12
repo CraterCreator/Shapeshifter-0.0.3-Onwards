@@ -12,6 +12,7 @@ public class Spawner : MonoBehaviour
     public float spawnTime;
     public int counter;
     public int destroyTimer;
+    public Collision col;
 
     private int index, zero, one, two, three;
     private GameObject spike, menu;
@@ -49,7 +50,10 @@ public class Spawner : MonoBehaviour
             counter += 1;
             index = numbers[Random.Range(Mathf.Min(numbers.ToArray()), numbers.Count)];
             spike = Spikes[index];
-            Instantiate(spike, spawnPos.position, spawnPos.rotation);
+            if (col.gameover == false)
+            {
+                Instantiate(spike, spawnPos.position, spawnPos.rotation);
+            }
 
             switch (counter)
             {

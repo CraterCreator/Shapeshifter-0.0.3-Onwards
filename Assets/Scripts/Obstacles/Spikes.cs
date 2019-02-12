@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Spikes : MonoBehaviour
 {
-    public float moveSpeed;
 
+    private float moveSpeed;
     private UI ui;
-    private GameObject raycastOrigin, manager;
+    private GameObject raycastOrigin;
     private Spawner spawner;
     private Animator anim, anim2;
     private int right, left;
@@ -16,12 +16,15 @@ public class Spikes : MonoBehaviour
     {
         ui = GameObject.Find("UI Controller").GetComponent<UI>();
         raycastOrigin = transform.Find("Origin").gameObject;
-        manager = GameObject.Find("Game Manager");
         spawner = GameObject.Find("Game Manager").GetComponent<Spawner>();
 
         if (gameObject.name == "Middle Tri(Clone)")
         {
             anim = GetComponent<Animator>();
+        }
+        else
+        {
+            anim2 = GetComponent<Animator>();
         }
 
         Destroy(gameObject, spawner.destroyTimer);
@@ -31,9 +34,28 @@ public class Spikes : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (manager.activeSelf == false)
+        if (ui.gameOver.activeSelf == true)
         {
-            Destroy(gameObject, 0.01f);
+            Destroy(raycastOrigin);
+            PolygonCollider2D[] poly = GetComponentsInChildren<PolygonCollider2D>();
+            if (poly.Length > 0)
+            {
+                poly[0].enabled = false;
+                if (poly.Length >= 2)
+                {
+                    poly[1].enabled = false;
+                }
+            }
+
+            if (anim2 != null)
+            {
+                anim2.SetBool("Fade", true);
+            }
+
+            if (anim != null)
+            {
+                anim.SetBool("Fade", true);
+            }
         }
 
         if (raycastOrigin != null && gameObject != null)
@@ -56,13 +78,14 @@ public class Spikes : MonoBehaviour
             Debug.DrawRay(new Vector2(raycastOrigin.transform.position.x - 5, raycastOrigin.transform.position.y), Vector2.right * 4, Color.green);
             Debug.DrawRay(new Vector2(raycastOrigin.transform.position.x - 1, raycastOrigin.transform.position.y), Vector2.right * 2, Color.green);
 
-
-            if (gameObject.name != "Middle Tri(Clone)" && hit.transform.tag == "Player" || gameObject.name != "Middle Tri(Clone)" && hit2.transform.tag == "Player" || gameObject.name != "Middle Tri(Clone)" && hit3.transform.tag == "Player")
+            if (ui.gameOver.activeSelf == false)
             {
-                anim2 = GetComponent<Animator>();
-                anim2.SetBool("Passed", true);
-                Destroy(raycastOrigin);
-                ui.score += 1;
+                if (gameObject.name != "Middle Tri(Clone)" && hit.transform.tag == "Player" || gameObject.name != "Middle Tri(Clone)" && hit2.transform.tag == "Player" || gameObject.name != "Middle Tri(Clone)" && hit3.transform.tag == "Player")
+                {
+                    anim2.SetBool("Passed", true);
+                    Destroy(raycastOrigin);
+                    ui.score += 1;
+                }
             }
 
             if (gameObject.name == "Middle Tri(Clone)" && hit.transform.name == "Right")

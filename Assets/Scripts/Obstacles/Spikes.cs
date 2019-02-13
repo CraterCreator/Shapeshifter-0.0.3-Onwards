@@ -36,17 +36,6 @@ public class Spikes : MonoBehaviour
     {
         if (ui.gameOver.activeSelf == true)
         {
-            Destroy(raycastOrigin);
-            PolygonCollider2D[] poly = GetComponentsInChildren<PolygonCollider2D>();
-            if (poly.Length > 0)
-            {
-                poly[0].enabled = false;
-                if (poly.Length >= 2)
-                {
-                    poly[1].enabled = false;
-                }
-            }
-
             if (anim2 != null)
             {
                 anim2.SetBool("Fade", true);
@@ -78,7 +67,7 @@ public class Spikes : MonoBehaviour
             Debug.DrawRay(new Vector2(raycastOrigin.transform.position.x - 5, raycastOrigin.transform.position.y), Vector2.right * 4, Color.green);
             Debug.DrawRay(new Vector2(raycastOrigin.transform.position.x - 1, raycastOrigin.transform.position.y), Vector2.right * 2, Color.green);
 
-            if (ui.gameOver.activeSelf == false)
+            if (ui.gameOver.activeSelf == false && raycastOrigin.activeSelf == true)
             {
                 if (gameObject.name != "Middle Tri(Clone)" && hit.transform.tag == "Player" || gameObject.name != "Middle Tri(Clone)" && hit2.transform.tag == "Player" || gameObject.name != "Middle Tri(Clone)" && hit3.transform.tag == "Player")
                 {
@@ -88,24 +77,27 @@ public class Spikes : MonoBehaviour
                 }
             }
 
-            if (gameObject.name == "Middle Tri(Clone)" && hit.transform.name == "Right")
+            if (raycastOrigin.activeSelf == true)
             {
-                right = 2;
-            }
+                if (gameObject.name == "Middle Tri(Clone)" && hit.transform.name == "Right")
+                {
+                    right = 2;
+                }
 
-            if (gameObject.name == "Middle Tri(Clone)" && hit.transform.name == "Left")
-            {
-                right = 1;
-            }
+                if (gameObject.name == "Middle Tri(Clone)" && hit.transform.name == "Left")
+                {
+                    right = 1;
+                }
 
-            if (gameObject.name == "Middle Tri(Clone)" && hit2.transform.name == "Right")
-            {
-                left = 1;
-            }
+                if (gameObject.name == "Middle Tri(Clone)" && hit2.transform.name == "Right")
+                {
+                    left = 1;
+                }
 
-            if (gameObject.name == "Middle Tri(Clone)" && hit2.transform.name == "Left")
-            {
-                left = 2;
+                if (gameObject.name == "Middle Tri(Clone)" && hit2.transform.name == "Left")
+                {
+                    left = 2;
+                }
             }
 
             if (left == 1 || right == 1)

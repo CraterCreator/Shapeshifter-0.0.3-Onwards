@@ -60,7 +60,7 @@ namespace VolumetricLines
 		/// Line Color
 		/// </summary>
 		[SerializeField] 
-		private Color m_lineColor;
+		public Color m_lineColor;
 
 		/// <summary>
 		/// The width of the line

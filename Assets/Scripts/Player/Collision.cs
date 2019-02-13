@@ -32,6 +32,7 @@ public class Collision : MonoBehaviour
         if(gameover == true)
         {
             StartCoroutine(Die());
+            Time.timeScale = 1;
         }
     }
 

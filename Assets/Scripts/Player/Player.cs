@@ -7,12 +7,15 @@ public class Player : MonoBehaviour
     private Animator anim;
     private UI ui;
     public bool RPrep, SPrep, LPrep;
+    private float scrW, scrH;
 
     // Use this for initialization
     void Start()
     {
         ui = GameObject.Find("UI Controller").GetComponent<UI>();
         anim = GetComponent<Animator>();
+        scrW = Screen.width / 10;
+        scrH = Screen.height / 16;
     }
 
     // Update is called once per frame
@@ -141,5 +144,10 @@ public class Player : MonoBehaviour
             SPrep = false;
             LPrep = false;
         }
+    }
+
+    void OnGUI()
+    {
+
     }
 }

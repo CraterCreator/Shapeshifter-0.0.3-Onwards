@@ -74,6 +74,7 @@ public class Spikes : MonoBehaviour
                     anim2.SetBool("Passed", true);
                     Destroy(raycastOrigin);
                     ui.score += 1;
+                    ui.scoreBool = true;
                 }
             }
 
@@ -113,6 +114,7 @@ public class Spikes : MonoBehaviour
             {
                 anim.SetBool("Win", true);
                 anim.SetBool("Passed", true);
+                ui.scoreBool = true;
                 ui.score += 1;
                 left = 0;
                 right = 0;

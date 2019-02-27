@@ -5,7 +5,7 @@ using UnityEngine;
 public class Collision : MonoBehaviour
 {
     public GameObject particleL, particleR;
-    public bool gameover;
+    public bool gameover, showAd;
     public EdgeCollider2D edge;
     public SpriteRenderer neonRend, rend;
 
@@ -13,7 +13,7 @@ public class Collision : MonoBehaviour
     private TrailSpawner1 spawner, spawner2;
     private GameObject partic;
     private Collision collL, collR;
-    private ParticleSystem syst;
+    public ParticleSystem syst;
 
     void Awake()
     {
@@ -29,7 +29,7 @@ public class Collision : MonoBehaviour
 
     void Update()
     {
-        if(gameover == true)
+        if (gameover == true)
         {
             StartCoroutine(Die());
             Time.timeScale = 1;
@@ -44,15 +44,15 @@ public class Collision : MonoBehaviour
             collR.gameover = true;
         }
 
+        if (ui.deaths == 3 && col.tag == "Spike")
+        {
+            showAd = true;
+            ui.deaths = 0;
+        }
+
         if (col.tag == "Checkpoint")
         {
-            collL.partic = GameObject.Find("Particle");
-            collR.partic = GameObject.Find("Particle");
-            syst = partic.GetComponent<ParticleSystem>();
-            var Main = syst.main;
-            Main.startColor = neonRend.color;
-            partic.SetActive(false);
-
+            StartCoroutine(CheckMyPoint());
             Destroy(col.transform.parent.gameObject);
             spawner.speed = 0.05f;
             spawner2.speed = 0.05f;
@@ -67,6 +67,19 @@ public class Collision : MonoBehaviour
             StartCoroutine(AddPoints());
             Destroy(col.transform.parent.gameObject);
         }
+    }
+
+    IEnumerator CheckMyPoint()
+    {
+        collL.partic = GameObject.Find("Particle");
+        collR.partic = GameObject.Find("Particle");
+        yield return new WaitForSeconds(0.1f);
+        syst = partic.GetComponent<ParticleSystem>();
+        var Main = syst.main;
+        Main.startColor = neonRend.color;
+
+        partic.SetActive(false);
+
     }
 
     IEnumerator AddPoints()

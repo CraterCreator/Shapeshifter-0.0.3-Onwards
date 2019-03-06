@@ -6,21 +6,49 @@ public class Player : MonoBehaviour
 {
     private Animator anim;
     private UI ui;
-    public bool RPrep, SPrep, LPrep;
-    private float scrW, scrH;
+    public bool RPrep, SPrep, LPrep, right, left;
+    private string dir;
+    private Vector2 mousePos;
 
     // Use this for initialization
     void Start()
     {
         ui = GameObject.Find("UI Controller").GetComponent<UI>();
         anim = GetComponent<Animator>();
-        scrW = Screen.width / 10;
-        scrH = Screen.height / 16;
     }
 
     // Update is called once per frame
     void Update()
     {
+        mousePos = Input.mousePosition;
+
+        if(mousePos.x >= 500)
+        {
+            dir = "Right";
+        }
+        else
+        {
+            dir = "Left";
+        }
+
+        if (Input.GetMouseButton(0) && dir == "Right")
+        {
+            right = true;
+        }
+        else
+        {
+            right = false;
+        }
+
+        if (Input.GetMouseButton(0) && dir == "Left")
+        {
+            left = true;
+        }
+        else
+        {
+            left = false;
+        }
+
         if (Input.anyKey == false)
         {
             anim.SetBool("Sides", false);
@@ -34,14 +62,14 @@ public class Player : MonoBehaviour
             SPrep = false;
             LPrep = false;
         }
-        if (ui.mainMenu.activeSelf == false && ui.gameOver.activeSelf == false)
+        if (ui.mainMenu.activeSelf == false && ui.gameOver.activeSelf == false && ui.optionsMenu.activeSelf == false && ui.creditsMenu.activeSelf == false)
         {
             //Inner Animations
 
             // Default
 
             // Sides
-            if (Input.GetKey(KeyCode.LeftArrow) && Input.GetKey(KeyCode.RightArrow) && RPrep == false)
+            if (left == true && right == true && RPrep == false)
             {
                 anim.SetBool("Sides", true);
                 anim.SetBool("Right", false);
@@ -55,7 +83,7 @@ public class Player : MonoBehaviour
             }
 
             // Right
-            if (Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftArrow))
+            if (right == true && !left == true)
             {
                 anim.SetBool("Right", true);
                 RPrep = true;
@@ -67,7 +95,7 @@ public class Player : MonoBehaviour
             }
 
             // Right to Sides
-            if (RPrep == true && Input.GetKey(KeyCode.LeftArrow) && Input.GetKey(KeyCode.RightArrow))
+            if (RPrep == true && left == true && right == true)
             {
                 SPrep = true;
                 anim.SetBool("RTS", true);
@@ -80,7 +108,7 @@ public class Player : MonoBehaviour
             }
 
             // SidesToRight
-            if (SPrep == true && Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftArrow))
+            if (SPrep == true && right == true && !left == true)
             {
                 anim.SetBool("Right", true);
                 anim.SetBool("STR", true);
@@ -93,7 +121,7 @@ public class Player : MonoBehaviour
             }
 
             // Left
-            if (Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.RightArrow))
+            if (left == true && !right == true)
             {
                 anim.SetBool("Left", true);
                 LPrep = true;
@@ -105,7 +133,7 @@ public class Player : MonoBehaviour
             }
 
             // Left to Sides
-            if (LPrep == true && Input.GetKey(KeyCode.RightArrow) && Input.GetKey(KeyCode.LeftArrow))
+            if (LPrep == true && right == true && left == true)
             {
                 SPrep = true;
                 anim.SetBool("LTS", true);
@@ -118,7 +146,7 @@ public class Player : MonoBehaviour
             }
 
             // Sides To Left
-            if (SPrep == true && Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.RightArrow))
+            if (SPrep == true && left == true && !right == true)
             {
                 anim.SetBool("Left", true);
                 anim.SetBool("STL", true);
@@ -144,10 +172,5 @@ public class Player : MonoBehaviour
             SPrep = false;
             LPrep = false;
         }
-    }
-
-    void OnGUI()
-    {
-
     }
 }

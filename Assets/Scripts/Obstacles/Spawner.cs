@@ -47,7 +47,7 @@ public class Spawner : MonoBehaviour
                 spawnTime -= 0.01f;
                 Time.timeScale += 0.005f;
             }
-            counter += 10;
+            counter += 1;
             index = numbers[Random.Range(Mathf.Min(numbers.ToArray()), numbers.Count)];
             spike = Spikes[index];
             if (col.gameover == false)

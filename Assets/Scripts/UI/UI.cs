@@ -36,7 +36,7 @@ public class UI : MonoBehaviour
             StartCoroutine(Ads());
         }
 
-        if(scoreBool == true)
+        if (scoreBool == true)
         {
             StartCoroutine(Add());
         }
@@ -57,7 +57,7 @@ public class UI : MonoBehaviour
             GameOver();
         }
 
-        if (gameOver.activeSelf == true || mainMenu.activeSelf == true)
+        if (gameOver.activeSelf == true || mainMenu.activeSelf == true || optionsMenu.activeSelf == true || creditsMenu.activeSelf == true)
         {
             animBack.SetBool("Started", false);
         }

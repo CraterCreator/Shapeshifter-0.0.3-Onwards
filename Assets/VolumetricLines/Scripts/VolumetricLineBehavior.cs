@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using VolumetricLines.Utils;
 
 namespace VolumetricLines
 {
@@ -59,7 +60,7 @@ namespace VolumetricLines
 		/// Line Color
 		/// </summary>
 		[SerializeField] 
-		public Color m_lineColor;
+		private Color m_lineColor;
 
 		/// <summary>
 		/// The width of the line
@@ -230,6 +231,8 @@ namespace VolumetricLines
 					m_material.SetFloat("_LineWidth", m_lineWidth);
 					m_material.SetFloat("_LightSaberFactor", m_lightSaberFactor);
 				}
+
+				m_material.SetFloat("_LineScale", transform.GetGlobalUniformScaleForLineWidth());
 			}
 		}
 
@@ -302,6 +305,9 @@ namespace VolumetricLines
 			Mesh mesh = new Mesh();
 			mesh.vertices = vertexPositions;
 			mesh.normals = other;
+			mesh.uv = VolumetricLineVertexData.TexCoords;
+			mesh.uv2 = VolumetricLineVertexData.VertexOffsets;
+			mesh.SetIndices(VolumetricLineVertexData.Indices, MeshTopology.Triangles, 0);
             mesh.RecalculateBounds();
 			m_meshFilter = GetComponent<MeshFilter>();
 			m_meshFilter.mesh = mesh;
@@ -311,6 +317,14 @@ namespace VolumetricLines
 		void OnDestroy()
 		{
 			DestroyMaterial();
+		}
+		
+		void Update()
+		{
+			if (transform.hasChanged && null != m_material)
+			{
+				m_material.SetFloat("_LineScale", transform.GetGlobalUniformScaleForLineWidth());
+			}
 		}
 
 		void OnValidate()

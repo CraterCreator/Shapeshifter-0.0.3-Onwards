@@ -7,7 +7,6 @@ public class Player : MonoBehaviour
     private Animator anim;
     private UI ui;
     public bool RPrep, SPrep, LPrep, right, left;
-    private string dir;
     private Vector2 mousePos;
 
     // Use this for initialization
@@ -20,36 +19,9 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        mousePos = Input.mousePosition;
+        Controls();
 
-        if(mousePos.x >= 500)
-        {
-            dir = "Right";
-        }
-        else
-        {
-            dir = "Left";
-        }
-
-        if (Input.GetMouseButton(0) && dir == "Right")
-        {
-            right = true;
-        }
-        else
-        {
-            right = false;
-        }
-
-        if (Input.GetMouseButton(0) && dir == "Left")
-        {
-            left = true;
-        }
-        else
-        {
-            left = false;
-        }
-
-        if (Input.anyKey == false)
+        if (Input.touchCount == 0)
         {
             anim.SetBool("Sides", false);
             anim.SetBool("Right", false);
@@ -172,5 +144,35 @@ public class Player : MonoBehaviour
             SPrep = false;
             LPrep = false;
         }
+    }
+
+    void Controls()
+    {
+
+        for (int i = 0; i < Input.touchCount; i++)
+        {
+            Vector3 touchpos = Camera.main.ScreenToWorldPoint(Input.touches[i].position);
+
+            if(touchpos.x > 0 && Input.touches[i].phase == TouchPhase.Began)
+            {
+                right = true;
+            }
+
+            if (touchpos.x > 0 && Input.touches[i].phase == TouchPhase.Ended)
+            {
+                right = false;
+            }
+
+            if (touchpos.x < 0 && Input.touches[i].phase == TouchPhase.Began)
+            {
+                left = true;
+            }
+
+            if (touchpos.x < 0 && Input.touches[i].phase == TouchPhase.Ended)
+            {
+                left = false;
+            }
+        }
+
     }
 }

@@ -7,7 +7,7 @@ public class Spikes : MonoBehaviour
 
     private float moveSpeed;
     private UI ui;
-    private GameObject raycastOrigin;
+    public GameObject raycastOrigin;
     private Spawner spawner;
     private Animator anim, anim2;
     private int right, left;
@@ -15,7 +15,10 @@ public class Spikes : MonoBehaviour
     void Start()
     {
         ui = GameObject.Find("UI Controller").GetComponent<UI>();
-        raycastOrigin = transform.Find("Origin").gameObject;
+        if (gameObject.tag != "Challenge")
+        {
+            raycastOrigin = transform.Find("Origin").gameObject;
+        }
         spawner = GameObject.Find("Game Manager").GetComponent<Spawner>();
 
         if (gameObject.name == "Middle Tri(Clone)")
@@ -27,13 +30,19 @@ public class Spikes : MonoBehaviour
             anim2 = GetComponent<Animator>();
         }
 
-        Destroy(gameObject, spawner.destroyTimer);
-        moveSpeed = 0.0825f;
+        moveSpeed = 0.08745f;
     }
 
     // Update is called once per frame
     void Update()
     {
+        transform.Translate(0, -moveSpeed * Time.timeScale, 0);
+
+        if (transform.position.y < -15)
+        {
+            Destroy(gameObject);
+        }
+
         if (ui.gameOver.activeSelf == true)
         {
             if (anim2 != null)
@@ -52,7 +61,6 @@ public class Spikes : MonoBehaviour
             Raycast();
         }
 
-        transform.Translate(0, -moveSpeed * Time.timeScale, 0);
     }
 
     void Raycast()

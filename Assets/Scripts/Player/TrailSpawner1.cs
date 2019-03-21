@@ -40,7 +40,6 @@ public class TrailSpawner1 : MonoBehaviour
             }
             yield return new WaitForSeconds(speed);
         }
-
     }
 }
 

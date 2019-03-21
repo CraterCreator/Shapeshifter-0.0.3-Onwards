@@ -11,7 +11,7 @@ public class CheckPoint : MonoBehaviour
     {
         manager = GameObject.Find("Game Manager");
 
-        moveSpeed = 0.0825f;
+        moveSpeed = 0.043725f;
     }
 
     // Update is called once per frame

@@ -23,14 +23,13 @@ public class Spawner : MonoBehaviour
     void Start()
     {
         off = true;
-        spawnTime = 1.5f;
+        spawnTime = 1.3f;
         destroyTimer = 3;
     }
 
     // Update is called once per frame
     void Update()
     {
-
         if (off == true)
         {
             StartCoroutine(Spawn());

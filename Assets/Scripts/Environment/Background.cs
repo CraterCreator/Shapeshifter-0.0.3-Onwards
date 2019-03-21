@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class Background : MonoBehaviour
 {
-    public float scrollSpeed = 0.5f;
+    public float scrollSpeed;
     public Renderer rend;
     public MeshRenderer mesh;
 
     // Use this for initialization
-    void Start()
+    void Awake()
     {
         rend = GetComponent<Renderer>();
-        scrollSpeed = 2.5f;
+        scrollSpeed = 1.25f;
     }
 
     // Update is called once per frame

@@ -5,9 +5,9 @@ using UnityEngine;
 public class Spikes : MonoBehaviour
 {
 
-    private float moveSpeed;
+    public float moveSpeed;
     private UI ui;
-    public GameObject raycastOrigin;
+    private GameObject raycastOrigin;
     private Spawner spawner;
     private Animator anim, anim2;
     private int right, left;
@@ -30,15 +30,15 @@ public class Spikes : MonoBehaviour
             anim2 = GetComponent<Animator>();
         }
 
-        moveSpeed = 0.08745f;
+        moveSpeed = 4.5f;
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(0, -moveSpeed * Time.timeScale, 0);
+        transform.Translate(0, -moveSpeed * Time.deltaTime, 0);
 
-        if (transform.position.y < -15)
+        if (transform.position.y < -30)
         {
             Destroy(gameObject);
         }

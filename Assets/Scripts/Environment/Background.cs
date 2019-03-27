@@ -9,16 +9,26 @@ public class Background : MonoBehaviour
     public MeshRenderer mesh;
 
     // Use this for initialization
-    void Awake()
+    void Start()
     {
         rend = GetComponent<Renderer>();
-        scrollSpeed = 1.25f;
+        // StartCoroutine(Repeat());
+        scrollSpeed = 2.25f;
     }
 
     // Update is called once per frame
     void Update()
     {
-        float offset = Time.time * scrollSpeed;
+        float offset = scrollSpeed * Time.time;
         rend.material.SetTextureOffset("_MainTex", new Vector2(0, -offset));
+    }
+
+    IEnumerator Repeat()
+    {
+        for (int i = 0; i < i + 1; i++)
+        {
+            scrollSpeed += 0.05f;
+            yield return new WaitForEndOfFrame();
+        }
     }
 }

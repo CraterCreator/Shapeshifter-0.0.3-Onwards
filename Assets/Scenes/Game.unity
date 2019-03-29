@@ -6227,7 +6227,6 @@ MonoBehaviour:
   edge: {fileID: 0}
   neonRend: {fileID: 0}
   rend: {fileID: 0}
-  syst: {fileID: 0}
 --- !u!114 &599404531
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11620,7 +11619,6 @@ MonoBehaviour:
   edge: {fileID: 0}
   neonRend: {fileID: 0}
   rend: {fileID: 0}
-  syst: {fileID: 0}
 --- !u!114 &1026110705
 MonoBehaviour:
   m_ObjectHideFlags: 0

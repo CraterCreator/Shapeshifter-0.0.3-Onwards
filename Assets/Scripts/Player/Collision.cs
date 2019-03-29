@@ -13,7 +13,7 @@ public class Collision : MonoBehaviour
     private TrailSpawner1 spawner, spawner2;
     private GameObject partic;
     private Collision collL, collR;
-    public ParticleSystem syst;
+    private ParticleSystem syst;
 
     void Awake()
     {
@@ -60,12 +60,16 @@ public class Collision : MonoBehaviour
 
         if (col.tag == "CheckpointFinish")
         {
-            partic.SetActive(true);
+            if (gameObject.name == "Triangle Right")
+            {
+                Destroy(col.transform.parent.gameObject);
+                partic.SetActive(true);
 
-            spawner.speed = 0.25f;
-            spawner2.speed = 0.25f;
-            StartCoroutine(AddPoints());
-            Destroy(col.transform.parent.gameObject);
+                spawner.speed = 0.25f;
+                spawner2.speed = 0.25f;
+                StartCoroutine(AddPoints());
+            }
+
         }
     }
 
@@ -95,6 +99,7 @@ public class Collision : MonoBehaviour
     {
         for (int i = 0; i < 1; i++)
         {
+            Time.timeScale = 1;
             GameObject child = gameObject.transform.GetChild(0).gameObject;
             child.SetActive(false);
             edge.enabled = false;

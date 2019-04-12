@@ -8,6 +8,7 @@ public class Collision : MonoBehaviour
     public bool gameover, showAd;
     public EdgeCollider2D edge;
     public SpriteRenderer neonRend, rend;
+    public int lastScore;
 
     private UI ui;
     private TrailSpawner1 spawner, spawner2;
@@ -99,6 +100,7 @@ public class Collision : MonoBehaviour
     {
         for (int i = 0; i < 1; i++)
         {
+            lastScore = ui.score;
             Time.timeScale = 1;
             GameObject child = gameObject.transform.GetChild(0).gameObject;
             child.SetActive(false);

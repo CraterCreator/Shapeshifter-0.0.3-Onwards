@@ -13,11 +13,13 @@ public class UI : MonoBehaviour
     public Spawner spawner;
     public Animator animOver, animBack, animScore;
     public GameObject left, right;
-    public GameObject optionsMenu, mainMenu, gameOver, creditsMenu, manager, sfxTick, musicTick, scoreObj;
+    public GameObject optionsMenu, mainMenu, gameOver, creditsMenu, manager, scoreObj;
     public float monitor;
     public int score, highScore, deaths;
-    public Text scoreUI, highUI, highUI2, menuScore;
+    public Text scoreUI, highUI, menuScore;
     public AudioSource music, sfx;
+    public Sprite sfxOn, sfxOff, musicOn, musicOff;
+    public Image sfxImg, musicImg;
     // Use this for initialization
     void Awake()
     {
@@ -46,11 +48,10 @@ public class UI : MonoBehaviour
             highScore = score;
             PlayerPrefs.SetInt("Highscore", highScore);
         }
-        menuScore.text = "" + score;
         monitor = Time.timeScale;
+        menuScore.text = "" + score;
         scoreUI.text = "" + score;
         highUI.text = "" + highScore;
-        highUI2.text = "" + highScore;
 
         if (left.activeSelf == false || right.activeSelf == false)
         {
@@ -155,29 +156,25 @@ public class UI : MonoBehaviour
 
     public void SFX()
     {
-        if (sfxTick.activeSelf == true)
+        if(sfxImg.sprite == sfxOn)
         {
-            sfxTick.SetActive(false);
-            sfx.gameObject.SetActive(false);
+            sfxImg.sprite = sfxOff;
         }
         else
         {
-            sfxTick.SetActive(true);
-            sfx.gameObject.SetActive(true);
+            sfxImg.sprite = sfxOn;
         }
     }
 
     public void Music()
     {
-        if (musicTick.activeSelf == true)
+        if (musicImg.sprite == musicOn)
         {
-            musicTick.SetActive(false);
-            music.gameObject.SetActive(false);
+            musicImg.sprite = musicOff;
         }
         else
         {
-            musicTick.SetActive(true);
-            music.gameObject.SetActive(true);
+            musicImg.sprite = musicOn;
         }
     }
 

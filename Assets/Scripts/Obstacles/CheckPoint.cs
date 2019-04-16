@@ -5,11 +5,11 @@ using UnityEngine;
 public class CheckPoint : MonoBehaviour
 {
     public float moveSpeed;
-    private GameObject manager;
+    private UI ui;
     // Use this for initialization
     void Start()
     {
-        manager = GameObject.Find("Game Manager");
+        ui = GameObject.Find("UI Controller").GetComponent<UI>();
 
         moveSpeed = 4.5f;
     }
@@ -17,7 +17,7 @@ public class CheckPoint : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (manager.activeSelf == false)
+        if (ui.mainMenu.activeSelf == true)
         {
             Destroy(gameObject);
         }

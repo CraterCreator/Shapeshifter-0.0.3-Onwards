@@ -34,7 +34,7 @@ public class Player : MonoBehaviour
             SPrep = false;
             LPrep = false;
         }
-        if (ui.mainMenu.activeSelf == false && ui.gameOver.activeSelf == false && ui.optionsMenu.activeSelf == false && ui.creditsMenu.activeSelf == false)
+        if (ui.mainMenu.activeSelf == false)
         {
             //Inner Animations
 

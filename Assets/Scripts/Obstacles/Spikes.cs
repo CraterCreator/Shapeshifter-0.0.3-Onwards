@@ -43,7 +43,7 @@ public class Spikes : MonoBehaviour
             Destroy(gameObject);
         }
 
-        if (ui.gameOver.activeSelf == true)
+        if (ui.mainMenu.activeSelf == true)
         {
             if (anim2 != null)
             {
@@ -75,7 +75,7 @@ public class Spikes : MonoBehaviour
             Debug.DrawRay(new Vector2(raycastOrigin.transform.position.x - 5, raycastOrigin.transform.position.y), Vector2.right * 4, Color.green);
             Debug.DrawRay(new Vector2(raycastOrigin.transform.position.x - 1, raycastOrigin.transform.position.y), Vector2.right * 2, Color.green);
 
-            if (ui.gameOver.activeSelf == false && raycastOrigin.activeSelf == true)
+            if (ui.mainMenu.activeSelf == false && raycastOrigin.activeSelf == true)
             {
                 if (gameObject.name != "Middle Tri(Clone)" && hit.transform.tag == "Player" || gameObject.name != "Middle Tri(Clone)" && hit2.transform.tag == "Player" || gameObject.name != "Middle Tri(Clone)" && hit3.transform.tag == "Player")
                 {

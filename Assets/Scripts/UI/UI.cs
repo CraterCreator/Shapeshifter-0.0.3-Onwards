@@ -9,11 +9,12 @@ public class UI : MonoBehaviour
     private Animator anim;
     private Collision colL, colR;
 
-    public bool scoreBool;
+    public bool scoreBool, credits;
     public Spawner spawner;
+    public RuntimeAnimatorController mainAnim;
     public Animator animOver, animBack, animScore;
     public GameObject left, right;
-    public GameObject optionsMenu, mainMenu, gameOver, creditsMenu, manager, scoreObj;
+    public GameObject mainMenu, manager, scoreObj;
     public float monitor;
     public int score, highScore, deaths;
     public Text scoreUI, highUI, menuScore;
@@ -58,7 +59,7 @@ public class UI : MonoBehaviour
             GameOver();
         }
 
-        if (gameOver.activeSelf == true || mainMenu.activeSelf == true || optionsMenu.activeSelf == true || creditsMenu.activeSelf == true)
+        if (mainMenu.activeSelf == true)
         {
             animBack.SetBool("Started", false);
         }
@@ -69,20 +70,6 @@ public class UI : MonoBehaviour
     }
 
     public void Play()
-    {
-        scoreObj.SetActive(true);
-        colL.gameover = false;
-        colR.gameover = false;
-        colL.edge.enabled = true;
-        colR.edge.enabled = true;
-        left.SetActive(true);
-        right.SetActive(true);
-        anim.SetBool("Play", true);
-        StartCoroutine(Off());
-        score = 0;
-    }
-
-    public void TryAgain()
     {
         scoreObj.SetActive(true);
         GameObject child1 = right.transform.GetChild(0).gameObject;
@@ -97,10 +84,18 @@ public class UI : MonoBehaviour
         colR.rend.enabled = true;
         left.SetActive(true);
         right.SetActive(true);
-        animOver.SetBool("Try", true);
+        if (animOver.runtimeAnimatorController == mainAnim)
+        {
+            animOver.SetBool("Try", true);
+        }
+        else
+        {
+            animOver.SetBool("Play", true);
+        }
         StartCoroutine(Off());
         deaths++;
     }
+
     IEnumerator Ads()
     {
         colR.showAd = false;
@@ -111,11 +106,15 @@ public class UI : MonoBehaviour
 
     IEnumerator Off()
     {
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.5f);
         score = 0;
         mainMenu.SetActive(false);
-        gameOver.SetActive(false);
         manager.SetActive(true);
+        yield return new WaitForSeconds(1);
+        if (animOver.runtimeAnimatorController != mainAnim)
+        {
+            animOver.runtimeAnimatorController = mainAnim;
+        }
     }
 
     IEnumerator Add()
@@ -126,37 +125,23 @@ public class UI : MonoBehaviour
         scoreBool = false;
     }
 
-    public void Options()
-    {
-        if (optionsMenu.activeSelf == false)
-        {
-            mainMenu.SetActive(false);
-            optionsMenu.SetActive(true);
-        }
-        else
-        {
-            mainMenu.SetActive(true);
-            optionsMenu.SetActive(false);
-        }
-    }
-
     public void Credits()
     {
-        if (creditsMenu.activeSelf == false)
+        if (credits == false)
         {
-            mainMenu.SetActive(false);
-            creditsMenu.SetActive(true);
+            credits = true;
+            animOver.SetBool("Credits", true);
         }
         else
         {
-            mainMenu.SetActive(true);
-            creditsMenu.SetActive(false);
+            credits = false;
+            animOver.SetBool("Credits", false);
         }
     }
 
     public void SFX()
     {
-        if(sfxImg.sprite == sfxOn)
+        if (sfxImg.sprite == sfxOn)
         {
             sfxImg.sprite = sfxOff;
         }

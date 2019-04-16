@@ -105,7 +105,7 @@ public class Collision : MonoBehaviour
             GameObject child = gameObject.transform.GetChild(0).gameObject;
             child.SetActive(false);
             edge.enabled = false;
-            ui.gameOver.SetActive(true);
+            ui.mainMenu.SetActive(true);
             rend.enabled = false;
             particleL.SetActive(true);
             particleR.SetActive(true);

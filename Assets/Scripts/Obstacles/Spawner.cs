@@ -6,7 +6,7 @@ public class Spawner : MonoBehaviour
 {
     public Transform spawnPos;
     public GameObject[] Spikes;
-    public GameObject line;
+    public GameObject line, holder, lastScore, highScore;
     public GameObject ob1, ob2, ob3, ob4, ob5;
     public List<int> numbers = new List<int>(new int[] { 0, 1, 2, 3 });
     public float spawnTime;
@@ -15,6 +15,7 @@ public class Spawner : MonoBehaviour
     public UI ui;
 
     private int index, zero, one, two, three;
+    private float scoreX;
     private GameObject spike, menu;
     private bool off, num0, num1, num2, num3;
 
@@ -40,6 +41,8 @@ public class Spawner : MonoBehaviour
     {
         for (int i = 0; i < i + 1; i++)
         {
+            index = numbers[Random.Range(Mathf.Min(numbers.ToArray()), numbers.Count)];
+            spike = Spikes[index];
             if (spawnTime > 0.9)
             {
                 spawnTime -= 0.01f;
@@ -49,8 +52,6 @@ public class Spawner : MonoBehaviour
                 }
             }
             counter += 1;
-            index = numbers[Random.Range(Mathf.Min(numbers.ToArray()), numbers.Count)];
-            spike = Spikes[index];
             if (col.gameover == false)
             {
                 Instantiate(spike, spawnPos.position, spawnPos.rotation);
@@ -58,12 +59,42 @@ public class Spawner : MonoBehaviour
 
             if (counter == ui.highScore && ui.highScore > 0)
             {
-                Instantiate(line, new Vector3(spawnPos.position.x + 5, spawnPos.position.y, 1), Quaternion.Euler(0, -90, 0));
+                if(spike == Spikes[0])
+                {
+                    scoreX = -1.7f;
+                }
+
+                if (spike == Spikes[1] || Spikes[2])
+                {
+                    scoreX = 1.7f;
+                }
+
+                if (spike == Spikes[2])
+                {
+                    scoreX = 0;
+                }
+                Instantiate(holder, new Vector3(spawnPos.position.x + 5, spawnPos.position.y, 1), Quaternion.Euler(0, -90, 0));
+                Instantiate(highScore, new Vector3(spawnPos.position.x + scoreX, spawnPos.position.y - 0.4f, 1), Quaternion.Euler(0, 0, 0));   
             }
 
             if (counter == col.lastScore && col.lastScore > 0)
             {
-                Instantiate(line, new Vector3(spawnPos.position.x + 5, spawnPos.position.y, 1), Quaternion.Euler(0, -90, 0));
+                if (spike == Spikes[0])
+                {
+                    scoreX = 1.7f;
+                }
+
+                if (spike == Spikes[1] || Spikes[2])
+                {
+                    scoreX = -1.7f;
+                }
+
+                if (spike == Spikes[3])
+                {
+                    scoreX = 0;
+                }
+                Instantiate(holder, new Vector3(spawnPos.position.x + 5, spawnPos.position.y, 1), Quaternion.Euler(0, -90, 0));
+                Instantiate(lastScore, new Vector3(spawnPos.position.x + scoreX, spawnPos.position.y - 0.4f, 1), Quaternion.Euler(0, 0, 0));
             }
             switch (counter)
             {

@@ -51,6 +51,11 @@ public class Collision : MonoBehaviour
             ui.deaths = 0;
         }
 
+        if(col.tag == "Holder")
+        {
+            Destroy(col.transform.parent.gameObject);
+        }
+
         if (col.tag == "Checkpoint")
         {
             StartCoroutine(CheckMyPoint());

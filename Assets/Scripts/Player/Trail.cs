@@ -17,6 +17,6 @@ public class Trail : MonoBehaviour
     void Update()
     {
         trail.color = triangle.color;
-        transform.Translate(0, -0.05f * Time.timeScale, 0, Space.World);
+        transform.Translate(0, -5 * Time.deltaTime, 0, Space.World);
     }
 }

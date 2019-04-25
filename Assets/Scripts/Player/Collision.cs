@@ -11,6 +11,7 @@ public class Collision : MonoBehaviour
     public int lastScore;
 
     private UI ui;
+    private Sounds sounds;
     private TrailSpawner1 spawner, spawner2;
     private GameObject partic;
     private Collision collL, collR;
@@ -22,6 +23,7 @@ public class Collision : MonoBehaviour
         rend = GetComponent<SpriteRenderer>();
         neonRend = GameObject.Find("Right Neon").GetComponent<SpriteRenderer>();
         ui = GameObject.Find("UI Controller").GetComponent<UI>();
+        sounds = GameObject.Find("AudioController").GetComponent<Sounds>();
         spawner = GameObject.Find("Left").GetComponent<TrailSpawner1>();
         spawner2 = GameObject.Find("Right").GetComponent<TrailSpawner1>();
         collL = GameObject.Find("Triangle Left").GetComponent<Collision>();
@@ -68,6 +70,8 @@ public class Collision : MonoBehaviour
         {
             if (gameObject.name == "Triangle Right")
             {
+                sounds.sfx.clip = sounds.checkSplosion;
+                sounds.sfx.Play();
                 Destroy(col.transform.parent.gameObject);
                 partic.SetActive(true);
 

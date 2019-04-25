@@ -153,7 +153,13 @@ public class Player : MonoBehaviour
         {
             Vector3 touchpos = Camera.main.ScreenToWorldPoint(Input.touches[i].position);
 
-            if(touchpos.x > 0 && Input.touches[i].phase == TouchPhase.Began)
+            if (Input.touchCount == 0)
+            {
+                right = false;
+                left = false;
+            }
+
+            if (touchpos.x > 0 && Input.touches[i].phase == TouchPhase.Began)
             {
                 right = true;
             }

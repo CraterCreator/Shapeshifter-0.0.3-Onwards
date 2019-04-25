@@ -7,6 +7,7 @@ public class Spikes : MonoBehaviour
 
     public float moveSpeed;
     private UI ui;
+    private Sounds sounds;
     private GameObject raycastOrigin;
     private Spawner spawner;
     private Animator anim, anim2;
@@ -14,6 +15,7 @@ public class Spikes : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        sounds = GameObject.Find("AudioController").GetComponent<Sounds>();
         ui = GameObject.Find("UI Controller").GetComponent<UI>();
         if (gameObject.tag != "Challenge")
         {
@@ -115,6 +117,8 @@ public class Spikes : MonoBehaviour
                 anim.SetBool("Passed", true);
                 left = 0;
                 right = 0;
+                sounds.sfx.clip = sounds.miss;
+                sounds.sfx.Play();
                 Destroy(raycastOrigin);
             }
 
@@ -124,6 +128,8 @@ public class Spikes : MonoBehaviour
                 anim.SetBool("Passed", true);
                 ui.scoreBool = true;
                 ui.score += 1;
+                sounds.sfx.clip = sounds.point;
+                sounds.sfx.Play();
                 left = 0;
                 right = 0;
                 Destroy(raycastOrigin);

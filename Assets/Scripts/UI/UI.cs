@@ -8,6 +8,7 @@ public class UI : MonoBehaviour
 {
     private Animator anim;
     private Collision colL, colR;
+    private Sounds sounds;
 
     public bool scoreBool, credits;
     public Spawner spawner;
@@ -27,6 +28,7 @@ public class UI : MonoBehaviour
         colL = GameObject.Find("Triangle Left").GetComponent<Collision>();
         colR = GameObject.Find("Triangle Right").GetComponent<Collision>();
         anim = GameObject.FindGameObjectWithTag("MainMenu").GetComponent<Animator>();
+        sounds = GameObject.Find("AudioController").GetComponent<Sounds>();
         highScore = PlayerPrefs.GetInt("Highscore");
         Advertisement.Initialize("3058067", true);
     }
@@ -37,11 +39,6 @@ public class UI : MonoBehaviour
         if (colR.showAd == true || colL.showAd == true)
         {
             StartCoroutine(Ads());
-        }
-
-        if (scoreBool == true)
-        {
-            StartCoroutine(Add());
         }
 
         if (score >= highScore)
@@ -71,9 +68,9 @@ public class UI : MonoBehaviour
 
     public void Play()
     {
-        scoreObj.SetActive(true);
         GameObject child1 = right.transform.GetChild(0).gameObject;
         GameObject child2 = left.transform.GetChild(0).gameObject;
+        scoreObj.SetActive(true);
         child1.SetActive(true);
         child2.SetActive(true);
         colL.gameover = false;
@@ -93,6 +90,10 @@ public class UI : MonoBehaviour
             animOver.SetBool("Play", true);
         }
         StartCoroutine(Off());
+        sounds.music.clip = sounds.gameMusic;
+        sounds.music.Play();
+        sounds.sfx.clip = sounds.buttonUp;
+        sounds.sfx.Play();
         deaths++;
     }
 
@@ -117,36 +118,41 @@ public class UI : MonoBehaviour
         }
     }
 
-    IEnumerator Add()
-    {
-        animScore.SetBool("Add", true);
-        yield return new WaitForSeconds(0.2f);
-        animScore.SetBool("Add", false);
-        scoreBool = false;
-    }
-
     public void Credits()
     {
         if (credits == false)
         {
+            sounds.sfx.clip = sounds.buttonUp;
+            sounds.sfx.Play();
             credits = true;
             animOver.SetBool("Credits", true);
         }
         else
         {
+            sounds.sfx.clip = sounds.buttonDown;
+            sounds.sfx.Play();
             credits = false;
             animOver.SetBool("Credits", false);
         }
+    }
+
+    public void Rate()
+    {
+        Application.OpenURL("market://details?id=" + Application.productName);
     }
 
     public void SFX()
     {
         if (sfxImg.sprite == sfxOn)
         {
+            sounds.sfx.mute = true;
             sfxImg.sprite = sfxOff;
         }
         else
         {
+            sounds.sfx.mute = false;
+            sounds.sfx.clip = sounds.buttonUp;
+            sounds.sfx.Play();
             sfxImg.sprite = sfxOn;
         }
     }
@@ -155,10 +161,16 @@ public class UI : MonoBehaviour
     {
         if (musicImg.sprite == musicOn)
         {
+            sounds.music.mute = true;
+            sounds.sfx.clip = sounds.buttonUp;
+            sounds.sfx.Play();
             musicImg.sprite = musicOff;
         }
         else
         {
+            sounds.music.mute = false;
+            sounds.sfx.clip = sounds.buttonDown;
+            sounds.sfx.Play();
             musicImg.sprite = musicOn;
         }
     }

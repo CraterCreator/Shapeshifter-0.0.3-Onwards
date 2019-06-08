@@ -9,7 +9,7 @@ public class Follow : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        col = GameObject.Find("Triangle Right").GetComponent<Collision>();
+        col = GameObject.Find("Triangle Left").GetComponent<Collision>();
 
         if (name == "ParticleTransporterL")
         {

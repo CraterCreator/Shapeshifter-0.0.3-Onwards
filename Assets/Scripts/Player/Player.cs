@@ -7,7 +7,6 @@ public class Player : MonoBehaviour
     private Animator anim;
     private UI ui;
     public bool RPrep, SPrep, LPrep, right, left;
-    private Vector2 mousePos;
 
     // Use this for initialization
     void Start()
@@ -20,6 +19,26 @@ public class Player : MonoBehaviour
     void Update()
     {
         Controls();
+        /*
+        if(Input.GetMouseButton(0) && Input.mousePosition.x > 185)
+        {
+            right = true;
+        }
+        else
+        {
+            right = false;
+        }
+
+
+        if(Input.GetMouseButton(0) && Input.mousePosition.x < 185)
+        {
+            left = true;
+        }
+        else
+        {
+            left = false;
+        }
+        */
 
         if (Input.touchCount == 0)
         {

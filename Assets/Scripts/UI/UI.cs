@@ -30,12 +30,47 @@ public class UI : MonoBehaviour
         anim = GameObject.FindGameObjectWithTag("MainMenu").GetComponent<Animator>();
         sounds = GameObject.Find("AudioController").GetComponent<Sounds>();
         highScore = PlayerPrefs.GetInt("Highscore");
-        Advertisement.Initialize("3058067", true);
+        //Advertisement.Initialize("3058067", true);
+    }
+
+    private void Start()
+    {
+        if(PlayerPrefs.GetInt("SFX") == 1)
+        {
+            sounds.sfx.mute = true;
+            sfxImg.sprite = sfxOff;
+        }
+
+        if (PlayerPrefs.GetInt("SFX") == 0)
+        {
+            sounds.sfx.mute = false;
+            sounds.sfx.clip = sounds.buttonUp;
+            sounds.sfx.Play();
+            sfxImg.sprite = sfxOn;
+        }
+
+        if(PlayerPrefs.GetInt("Music") == 1)
+        {
+            sounds.music.mute = true;
+            sounds.sfx.clip = sounds.buttonUp;
+            sounds.sfx.Play();
+            musicImg.sprite = musicOff;
+        }
+
+        if (PlayerPrefs.GetInt("Music") == 0)
+        {
+            sounds.music.mute = false;
+            sounds.sfx.clip = sounds.buttonDown;
+            sounds.sfx.Play();
+            musicImg.sprite = musicOn;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+
+
         if (colR.showAd == true || colL.showAd == true)
         {
             StartCoroutine(Ads());
@@ -79,6 +114,8 @@ public class UI : MonoBehaviour
         colR.edge.enabled = true;
         colL.rend.enabled = true;
         colR.rend.enabled = true;
+        left.transform.localPosition = new Vector3(0, 0, 0);
+        right.transform.localPosition = new Vector3(0, 0, 0);
         left.SetActive(true);
         right.SetActive(true);
         if (animOver.runtimeAnimatorController == mainAnim)
@@ -102,7 +139,7 @@ public class UI : MonoBehaviour
         colR.showAd = false;
         colL.showAd = false;
         yield return new WaitForSeconds(0.6f);
-        Advertisement.Show();
+        //Advertisement.Show();
     }
 
     IEnumerator Off()
@@ -147,6 +184,7 @@ public class UI : MonoBehaviour
         {
             sounds.sfx.mute = true;
             sfxImg.sprite = sfxOff;
+            PlayerPrefs.SetInt("SFX", 1);
         }
         else
         {
@@ -154,6 +192,7 @@ public class UI : MonoBehaviour
             sounds.sfx.clip = sounds.buttonUp;
             sounds.sfx.Play();
             sfxImg.sprite = sfxOn;
+            PlayerPrefs.SetInt("SFX", 0);
         }
     }
 
@@ -165,6 +204,7 @@ public class UI : MonoBehaviour
             sounds.sfx.clip = sounds.buttonUp;
             sounds.sfx.Play();
             musicImg.sprite = musicOff;
+            PlayerPrefs.SetInt("Music", 1);
         }
         else
         {
@@ -172,6 +212,7 @@ public class UI : MonoBehaviour
             sounds.sfx.clip = sounds.buttonDown;
             sounds.sfx.Play();
             musicImg.sprite = musicOn;
+            PlayerPrefs.SetInt("Music", 0);
         }
     }
 

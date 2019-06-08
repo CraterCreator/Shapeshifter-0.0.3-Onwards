@@ -228,9 +228,9 @@ QualitySettings:
     asyncUploadPersistentBuffer: 1
     resolutionScalingFixedDPIFactor: 1
     excludedTargetPlatforms:
-    - Android
     - Standalone
     - iPhone
+    - Android
   m_PerPlatformDefaultQuality:
     Android: 0
     Standalone: 0

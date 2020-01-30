@@ -17,6 +17,7 @@ public class Spikes : MonoBehaviour
     {
         sounds = GameObject.Find("AudioController").GetComponent<Sounds>();
         ui = GameObject.Find("UI Controller").GetComponent<UI>();
+
         if (gameObject.tag != "Challenge")
         {
             raycastOrigin = transform.Find("Origin").gameObject;
@@ -38,7 +39,10 @@ public class Spikes : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(0, -moveSpeed * Time.deltaTime, 0);
+        if (gameObject.transform.parent == null)
+        {
+            transform.Translate(0, -moveSpeed * Time.deltaTime, 0);
+        }
 
         if (transform.position.y < -30)
         {
@@ -47,6 +51,11 @@ public class Spikes : MonoBehaviour
 
         if (ui.mainMenu.activeSelf == true)
         {
+            if(gameObject.tag == "Challenge")
+            {
+                Destroy(GameObject.FindWithTag("CheckpointFinish"));
+            }
+
             if (anim2 != null)
             {
                 anim2.SetBool("Fade", true);
@@ -83,6 +92,7 @@ public class Spikes : MonoBehaviour
                 {
                     anim2.SetBool("Passed", true);
                     Destroy(raycastOrigin);
+                    if(gameObject.transform.parent == null)
                     ui.score += 1;
                     ui.scoreBool = true;
                 }

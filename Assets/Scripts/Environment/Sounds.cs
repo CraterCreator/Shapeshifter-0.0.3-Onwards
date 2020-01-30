@@ -8,16 +8,9 @@ public class Sounds : MonoBehaviour
     public AudioSource music, sfx;
     public AudioClip menuMusic, gameMusic, buttonUp, buttonDown, death, checkSplosion, point, miss, right, left, both;
     public Button play;
-    private UI ui;
-    private Collision col;
-    // Start is called before the first frame update
-    void Awake()
-    {
-        col = GameObject.Find("Triangle Left").GetComponent<Collision>();
-        ui = GameObject.Find("UI Controller").GetComponent<UI>();
-    }
+    public UI ui;
+    public Collision col;
 
-    // Update is called once per frame
     void Update()
     {
         if(col.gameover == true && music.clip != menuMusic)

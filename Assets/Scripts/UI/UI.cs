@@ -6,36 +6,32 @@ using UnityEngine.Advertisements;
 
 public class UI : MonoBehaviour
 {
-    private Animator anim;
-    private Collision colL, colR;
-    private Sounds sounds;
-
+    public Animator anim;
+    public Collision colL, colR;
+    public Sounds sounds;
+    public Button playButton;
     public bool scoreBool, credits;
     public Spawner spawner;
     public RuntimeAnimatorController mainAnim;
-    public Animator animOver, animBack, animScore;
-    public GameObject left, right;
+    public Animator animOver, animBack, animScore, animPlayer;
+    public GameObject left, right, lPS, rPS;
     public GameObject mainMenu, manager, scoreObj;
-    public float monitor;
     public int score, highScore, deaths;
     public Text scoreUI, highUI, menuScore;
     public AudioSource music, sfx;
     public Sprite sfxOn, sfxOff, musicOn, musicOff;
     public Image sfxImg, musicImg;
+
     // Use this for initialization
     void Awake()
     {
-        colL = GameObject.Find("Triangle Left").GetComponent<Collision>();
-        colR = GameObject.Find("Triangle Right").GetComponent<Collision>();
-        anim = GameObject.FindGameObjectWithTag("MainMenu").GetComponent<Animator>();
-        sounds = GameObject.Find("AudioController").GetComponent<Sounds>();
         highScore = PlayerPrefs.GetInt("Highscore");
         //Advertisement.Initialize("3058067", true);
     }
 
     private void Start()
     {
-        if(PlayerPrefs.GetInt("SFX") == 1)
+        if (PlayerPrefs.GetInt("SFX") == 1)
         {
             sounds.sfx.mute = true;
             sfxImg.sprite = sfxOff;
@@ -49,7 +45,7 @@ public class UI : MonoBehaviour
             sfxImg.sprite = sfxOn;
         }
 
-        if(PlayerPrefs.GetInt("Music") == 1)
+        if (PlayerPrefs.GetInt("Music") == 1)
         {
             sounds.music.mute = true;
             sounds.sfx.clip = sounds.buttonUp;
@@ -70,7 +66,6 @@ public class UI : MonoBehaviour
     void Update()
     {
 
-
         if (colR.showAd == true || colL.showAd == true)
         {
             StartCoroutine(Ads());
@@ -81,43 +76,50 @@ public class UI : MonoBehaviour
             highScore = score;
             PlayerPrefs.SetInt("Highscore", highScore);
         }
-        monitor = Time.timeScale;
         menuScore.text = "" + score;
         scoreUI.text = "" + score;
         highUI.text = "" + highScore;
+
+        if (colR.gameover || colL.gameover)
+        {
+            animBack.SetBool("Started", false);
+            scoreObj.SetActive(false);
+        }
+
 
         if (left.activeSelf == false || right.activeSelf == false)
         {
             GameOver();
         }
 
-        if (mainMenu.activeSelf == true)
+        if (mainMenu.activeSelf != true)
         {
-            animBack.SetBool("Started", false);
-        }
-        else
-        {
-            animBack.SetBool("Started", true);
+            manager.SetActive(true);
+            if (animOver.runtimeAnimatorController != mainAnim)
+            {
+                animOver.runtimeAnimatorController = mainAnim;
+            }
         }
     }
 
+
     public void Play()
     {
-        GameObject child1 = right.transform.GetChild(0).gameObject;
-        GameObject child2 = left.transform.GetChild(0).gameObject;
-        scoreObj.SetActive(true);
-        child1.SetActive(true);
-        child2.SetActive(true);
+        playButton.interactable = false;
+        animBack.SetBool("Started", true);
+        animPlayer.SetTrigger("Start");
         colL.gameover = false;
         colR.gameover = false;
         colL.edge.enabled = true;
         colR.edge.enabled = true;
-        colL.rend.enabled = true;
-        colR.rend.enabled = true;
+        colR.gameover = false;
+        colL.gameover = false;
+        left.SetActive(true);
+        lPS.SetActive(true);
+        right.SetActive(true);
+        rPS.SetActive(true);
         left.transform.localPosition = new Vector3(0, 0, 0);
         right.transform.localPosition = new Vector3(0, 0, 0);
-        left.SetActive(true);
-        right.SetActive(true);
         if (animOver.runtimeAnimatorController == mainAnim)
         {
             animOver.SetBool("Try", true);
@@ -126,7 +128,6 @@ public class UI : MonoBehaviour
         {
             animOver.SetBool("Play", true);
         }
-        StartCoroutine(Off());
         sounds.music.clip = sounds.gameMusic;
         sounds.music.Play();
         sounds.sfx.clip = sounds.buttonUp;
@@ -140,19 +141,6 @@ public class UI : MonoBehaviour
         colL.showAd = false;
         yield return new WaitForSeconds(0.6f);
         //Advertisement.Show();
-    }
-
-    IEnumerator Off()
-    {
-        yield return new WaitForSeconds(0.5f);
-        score = 0;
-        mainMenu.SetActive(false);
-        manager.SetActive(true);
-        yield return new WaitForSeconds(1);
-        if (animOver.runtimeAnimatorController != mainAnim)
-        {
-            animOver.runtimeAnimatorController = mainAnim;
-        }
     }
 
     public void Credits()
@@ -189,8 +177,6 @@ public class UI : MonoBehaviour
         else
         {
             sounds.sfx.mute = false;
-            sounds.sfx.clip = sounds.buttonUp;
-            sounds.sfx.Play();
             sfxImg.sprite = sfxOn;
             PlayerPrefs.SetInt("SFX", 0);
         }
@@ -201,16 +187,12 @@ public class UI : MonoBehaviour
         if (musicImg.sprite == musicOn)
         {
             sounds.music.mute = true;
-            sounds.sfx.clip = sounds.buttonUp;
-            sounds.sfx.Play();
             musicImg.sprite = musicOff;
             PlayerPrefs.SetInt("Music", 1);
         }
         else
         {
             sounds.music.mute = false;
-            sounds.sfx.clip = sounds.buttonDown;
-            sounds.sfx.Play();
             musicImg.sprite = musicOn;
             PlayerPrefs.SetInt("Music", 0);
         }
@@ -218,7 +200,6 @@ public class UI : MonoBehaviour
 
     void GameOver()
     {
-        scoreObj.SetActive(false);
         spawner.counter = 0;
         left.SetActive(false);
         right.SetActive(false);
@@ -228,5 +209,10 @@ public class UI : MonoBehaviour
         {
             manager.SetActive(false);
         }
+    }
+
+    public void Off()
+    {
+        mainMenu.SetActive(false);
     }
 }

@@ -6,7 +6,7 @@ public class Spawner : MonoBehaviour
 {
     public Transform spawnPos;
     public GameObject[] Spikes;
-    public GameObject line, holder, lastScore, highScore;
+    public GameObject line, holder, lastScore, highScore, curSpike;
     public GameObject ob1, ob2, ob3, ob4, ob5;
     public List<int> numbers = new List<int>(new int[] { 0, 1, 2, 3 });
     public float spawnTime;
@@ -14,27 +14,15 @@ public class Spawner : MonoBehaviour
     public Collision col;
     public UI ui;
 
+    private GameObject spike;
     private int index, zero, one, two, three;
     private float scoreX;
-    private GameObject spike, menu;
-    private bool off, num0, num1, num2, num3;
+    private bool num0, num1, num2, num3;
 
-
-    // Use this for initialization
-    void Start()
+    void OnEnable()
     {
-        off = true;
-        spawnTime = 1.3f;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (off == true)
-        {
-            StartCoroutine(Spawn());
-            off = false;
-        }
+        spawnTime = 1.5f;
+        StartCoroutine(Spawn());
     }
 
     IEnumerator Spawn()
@@ -54,12 +42,12 @@ public class Spawner : MonoBehaviour
             counter += 1;
             if (col.gameover == false)
             {
-                Instantiate(spike, spawnPos.position, spawnPos.rotation);
+                curSpike = Instantiate(spike, spawnPos.position, spawnPos.rotation);
             }
 
             if (counter == ui.highScore && ui.highScore > 0)
             {
-                if(spike == Spikes[0])
+                if (spike == Spikes[0])
                 {
                     scoreX = -1.7f;
                 }
@@ -73,8 +61,7 @@ public class Spawner : MonoBehaviour
                 {
                     scoreX = 0;
                 }
-                Instantiate(holder, new Vector3(spawnPos.position.x + 5, spawnPos.position.y, 1), Quaternion.Euler(0, -90, 0));
-                Instantiate(highScore, new Vector3(spawnPos.position.x + scoreX, spawnPos.position.y - 0.4f, 1), Quaternion.Euler(0, 0, 0));   
+                SpawnHighScoreHolder();
             }
 
             if (counter == col.lastScore && col.lastScore > 0)
@@ -93,39 +80,36 @@ public class Spawner : MonoBehaviour
                 {
                     scoreX = 0;
                 }
-                Instantiate(holder, new Vector3(spawnPos.position.x + 5, spawnPos.position.y, 1), Quaternion.Euler(0, -90, 0));
-                Instantiate(lastScore, new Vector3(spawnPos.position.x + scoreX, spawnPos.position.y - 0.4f, 1), Quaternion.Euler(0, 0, 0));
+                SpawnPreviousScoreHolder();
             }
             switch (counter)
             {
-                    
-
                 case 20:
-                    Instantiate(line, new Vector3(spawnPos.position.x + 5, spawnPos.position.y, 1), Quaternion.Euler(0, -90, 0));
+                    ChallengeSpawnConstants(1);
                     yield return new WaitForSeconds(spawnTime);
                     Instantiate(ob1, spawnPos.position, spawnPos.rotation);
                     yield return new WaitForSeconds(4);
                     break;
                 case 40:
-                    Instantiate(line, new Vector3(spawnPos.position.x + 5, spawnPos.position.y, 1), Quaternion.Euler(0, -90, 0));
+                    ChallengeSpawnConstants(2);
                     yield return new WaitForSeconds(spawnTime);
                     Instantiate(ob2, spawnPos.position, spawnPos.rotation);
                     yield return new WaitForSeconds(4);
                     break;
                 case 60:
-                    Instantiate(line, new Vector3(spawnPos.position.x + 5, spawnPos.position.y, 1), Quaternion.Euler(0, -90, 0));
+                    ChallengeSpawnConstants(3);
                     yield return new WaitForSeconds(spawnTime);
                     Instantiate(ob3, spawnPos.position, spawnPos.rotation);
                     yield return new WaitForSeconds(5);
                     break;
                 case 80:
-                    Instantiate(line, new Vector3(spawnPos.position.x + 5, spawnPos.position.y, 1), Quaternion.Euler(0, -90, 0));
+                    ChallengeSpawnConstants(4);
                     yield return new WaitForSeconds(spawnTime);
                     Instantiate(ob4, spawnPos.position, spawnPos.rotation);
                     yield return new WaitForSeconds(6);
                     break;
                 case 100:
-                    Instantiate(line, new Vector3(spawnPos.position.x + 5, spawnPos.position.y, 1), Quaternion.Euler(0, -90, 0));
+                    ChallengeSpawnConstants(5);
                     yield return new WaitForSeconds(spawnTime);
                     Instantiate(ob5, spawnPos.position, spawnPos.rotation);
                     yield return new WaitForSeconds(6);
@@ -228,9 +212,26 @@ public class Spawner : MonoBehaviour
         }
     }
 
-    void OnEnable()
+    void ChallengeSpawnConstants(int number)
     {
-        spawnTime = 1.5f;
-        off = true;
+        GameObject curLine = Instantiate(line, curSpike.transform.position, Quaternion.Euler(0, 0, 0));
+        curLine.GetComponent<Animator>().SetFloat("Number", number);
+        curLine.transform.parent = curSpike.transform;
+    }
+
+    void SpawnPreviousScoreHolder()
+    {
+        GameObject curHolder = Instantiate(holder, curSpike.transform.position, Quaternion.Euler(0, 0, 0));
+        GameObject curText = Instantiate(lastScore, new Vector3(spawnPos.position.x + scoreX, spawnPos.position.y - 0.4f, 1), Quaternion.Euler(0, 0, 0));
+        curHolder.transform.parent = curSpike.transform;
+        curText.transform.parent = curHolder.transform;
+    }
+    
+    void SpawnHighScoreHolder()
+    {
+        GameObject curHolder = Instantiate(holder, curSpike.transform.position, Quaternion.Euler(0, 0, 0));
+        GameObject curText = Instantiate(highScore, new Vector3(spawnPos.position.x + scoreX, spawnPos.position.y - 0.4f, 1), Quaternion.Euler(0, 0, 0));
+        curHolder.transform.parent = curSpike.transform;
+        curText.transform.parent = curHolder.transform;
     }
 }
